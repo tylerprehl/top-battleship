@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "start": "webpack serve --open",
-    "watch-files": "onchange 'js-files/*' 'index.html' -- npm run build",
+    "watch-files": "onchange 'src/*' 'index.html' -- npm run build",
     "test": "jest"
   },
   "author": "Tyler Prehl",
@@ -16,6 +16,7 @@
     "@babel/preset-env": "^7.23.5",
     "babel-jest": "^29.7.0",
     "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.5.4",
     "jest": "^29.7.0",
     "onchange": "^7.1.0",
     "style-loader": "^3.3.3",
