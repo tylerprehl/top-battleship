@@ -1,5 +1,18 @@
 import * as Ship from './ship';
 
-it('Test Add Function', () => {
-  expect(Ship.add(1, 2)).toBe(3);
+it('Test 2 Hits', () => {
+  const myShip = Ship.createShip(3);
+  myShip.hit();
+  myShip.hit();
+
+  expect(myShip.isSunk()).toBe(false);
+})
+
+it('Test 3 Hits', () => {
+  const myShip = Ship.createShip(3);
+  myShip.hit();
+  myShip.hit();
+  myShip.hit();
+
+  expect(myShip.isSunk()).toBe(true);
 })
