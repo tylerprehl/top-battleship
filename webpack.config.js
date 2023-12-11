@@ -7,18 +7,19 @@ module.exports = {
   mode: 'development',
   entry: {
     ship: './src/ship.js',
+    battleship: './src/battleship.js',
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'TOP - Battleship',
+      template: './index.html',
+    }),
+  ],
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'JavaScript Practice',
-      template: './index.html',
-    }),
-  ],
   module: {
     rules: [
       {

@@ -1,3 +1,5 @@
-import ship from './ship';
+import * as Ship from './ship';
 
-ship.add();
+it('Test Add Function', () => {
+  expect(Ship.add(1, 2)).toBe(3);
+})
