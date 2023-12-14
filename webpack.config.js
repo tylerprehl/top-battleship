@@ -7,6 +7,8 @@ module.exports = {
   mode: 'development',
   entry: {
     ship: './src/ship.js',
+    player: './src/player.js',
+    gameboard: './src/gameboard.js',
     battleship: './src/battleship.js',
   },
   plugins: [
