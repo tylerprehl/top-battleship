@@ -1,6 +1,10 @@
 function createShip(length) {
   let hitCount = 0;
 
+  function getHitCount() {
+    return hitCount;
+  }
+
   function hit() {
     hitCount += 1;
   }
@@ -12,7 +16,7 @@ function createShip(length) {
     return false;
   }
 
-  return { hit, isSunk };
+  return { length, getHitCount, hit, isSunk };
 }
 
 export { createShip };
