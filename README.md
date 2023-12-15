@@ -5,10 +5,11 @@ This project's goals are tailored towards practicing Test Driven Development wit
 - run ```npm run start```
 
 ### To Do
-- Build basic game UI (display changes based on current prompt/alert game)
+- Interactive UI setup (placing ships - start simple with starting coordinate/radio button orienation entry)
+  - classes: GameSetup (imports DomGameSetup)
 - Interactive UI for attacking (click on the enemy's board, remember to hide unknown!)
-- Interactive UI for placing ships
-- Reset players (restart everything from the beginning)
+  - classes: Gameplay (imports DomGameplay)
+- Reset the game completely
 
 ### Main Takeaways
 - TDD is SUPER helpful for building pure functions (and preventing tightly coupled code)
