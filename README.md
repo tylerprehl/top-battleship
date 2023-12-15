@@ -1,22 +1,32 @@
 # The Odin Project - Battleship
-This project's goals are tailored towards practicing Test Driven Development with JS and Jest.
+This project's goals are tailored towards practicing Test Driven Development with JS and Jest. To run this project:
+- clone the repo
+- run ```npm init```
+- run ```npm run start```
 
 ### To Do
-- TBD
+- Build basic game UI (display changes based on current prompt/alert game)
+- Interactive UI for attacking (click on the enemy's board, remember to hide unknown!)
+- Interactive UI for placing ships
+- Reset players (restart everything from the beginning)
 
 ### Main Takeaways
-- 
+- TDD is SUPER helpful for building pure functions (and preventing tightly coupled code)
+- TDD is also a great way to make designing objects and deciding where certain functions should reside simple
 
 ### Other Interesting Things Learned
-- the Array.prototype.forEach() loop cannot be broken
+- the Array.prototype.forEach() loop cannot be broken with a return statement
 
-### Notes for battleship.js Structure
-- 'global' vars: the players
-
-### Notes for Gameplay Design/Order
-- create player
-- build player board
+### Notes (to Self) for Gameplay Design/Order
+- create player1
+- build player1 board
 - 'pass computer' screen
-- create player/AI
-- build player/AI board
-- game starts...
+- create player2/AI
+- build player2/AI board
+- game starts
+- player1 attacks
+- 'pass' screen
+- player2/AI attacks
+- 'pass' screen
+- etc...
+- player/AI win/play again/reset screen

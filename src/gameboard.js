@@ -8,6 +8,19 @@ function createGameboard() {
   }
 
   let ships = [];
+
+  function resetBoard() {
+    let newGameboard = [];
+    for (let i = 0; i < 8; i++) {
+      newGameboard[i] = [];
+      for (let j = 0; j < 8; j++) {
+        newGameboard[i][j] = { ship: '-', attacked: false };
+      }
+    }
+    
+    gameboard = newGameboard;
+    ships = [];
+  }
   
   function placeShip(ship, orientation, startRowIndex, startColIndex) {
     const shipLength = ship.length;
@@ -78,7 +91,7 @@ function createGameboard() {
   // access to gameboard is only really necessary for testing purposes
   // (some tests check specific coordinates, which requires access to the 
   // gameboard array itself)
-  return { gameboard, placeShip, receiveAttack, allShipsAreSunk };
+  return { gameboard, resetBoard, placeShip, receiveAttack, allShipsAreSunk };
 }
 
 export { createGameboard };
