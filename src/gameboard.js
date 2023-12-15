@@ -12,6 +12,7 @@ function createGameboard() {
   function placeShip(ship, orientation, startRowIndex, startColIndex) {
     const shipLength = ship.length;
     if (orientation === 'horizontal') {
+      // first check for errors
       for (let i=startColIndex; i<startColIndex+shipLength; i++) {
         if (i > 7) {
           throw new Error('ship out of bounds');
@@ -19,11 +20,17 @@ function createGameboard() {
         if (gameboard[startRowIndex][i].ship !== '-') {
           throw new Error('ship overlap');
         }
+      }
+
+      // no errors, go ahead and add
+      for (let i=startColIndex; i<startColIndex+shipLength; i++) {
         gameboard[startRowIndex][i] = { ship: ship, attacked: false };
       }
+
       ships.push(ship);
     }
     else if (orientation === 'vertical') {
+      // first check for errors
       for (let i=startRowIndex; i<startRowIndex+shipLength; i++) {
         if (i > 7) {
           throw new Error('ship out of bounds');
@@ -31,8 +38,13 @@ function createGameboard() {
         if (gameboard[i][startColIndex].ship !== '-') {
           throw new Error('ship overlap');
         }
+      }
+
+      // no errors, go ahead and add
+      for (let i=startRowIndex; i<startRowIndex+shipLength; i++) {
         gameboard[i][startColIndex] = { ship: ship, attacked: false };
       }
+
       ships.push(ship);
     }
   }
