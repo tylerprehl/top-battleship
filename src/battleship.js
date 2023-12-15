@@ -98,6 +98,56 @@ while(shipsPlacedCount < shipLengths.length) {
   }
 }
 
-console.log('Starting the game - Player 1 goes first...');
+console.log('Starting the actual game...');
+
+let currentPlayer = player1;
+let enemyPlayer = player2;
+
+while (player1.playerBoard.allShipsAreSunk() === false && 
+  player2.playerBoard.allShipsAreSunk() === false) {
+  
+  alert(`${currentPlayer.playerName}, it's your turn`);
+
+  const attackCoordinatesStr = prompt(`Pick a coordinate to attack\nEx: 1,1`);
+  const attackCoordinatesArr = attackCoordinatesStr.split(',');
+
+  try {
+    const successfulAttack = enemyPlayer.playerBoard.receiveAttack(
+      Number(attackCoordinatesArr[0]),
+      Number(attackCoordinatesArr[1])
+    );
+  
+    if (successfulAttack) {
+      alert(`Nice hit!`);
+    }
+    else {
+      alert(`Miss!`);
+    }
+
+    // switch turns
+    const tempPlayer = currentPlayer;
+    currentPlayer = enemyPlayer;
+    enemyPlayer = tempPlayer;
+
+  } catch (e) {
+    alert(`Error: ${e.message}\nPlease try again`);
+  }
+
+}
+
+console.log('Someone won the game!');
+
+if (player1.playerBoard.allShipsAreSunk() === true) {
+  alert(`${player1.playerName} won the game!`);
+  player1.increaseWinCount();
+}
+else if (player2.playerBoard.allShipsAreSunk() === true) {
+  alert(`${player1.playerName} won the game!`);
+  player2.increaseWinCount();
+}
+else {
+  console.log('Actually, something went wrong cause nobody won');
+}
+
 
 
