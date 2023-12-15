@@ -55,18 +55,29 @@ it('Test out of bound placeShip', () => {
   }
 });
 
-it('Test receiveAttack', () => {
+it('Test receiveAttack - hit', () => {
   const myShip = Ship.createShip(2);
   let myBoard = Gameboard.createGameboard();
   myBoard.placeShip(myShip, 'horizontal', 1, 1);
-  myBoard.receiveAttack(1, 1);
+  const wasHit = myBoard.receiveAttack(1, 1);
 
+  expect(wasHit).toBe(true);
   expect(myBoard.gameboard[1][1].attacked).toBe(true);
   expect(myBoard.gameboard[1][1].ship.getHitCount()).toBe(1);
   expect(myBoard.gameboard[1][2].ship.getHitCount()).toBe(1);
 });
 
-it('Test duplicated location receiveAttack', () => {
+it('Test receiveAttack - miss', () => {
+  const myShip = Ship.createShip(2);
+  let myBoard = Gameboard.createGameboard();
+  myBoard.placeShip(myShip, 'horizontal', 2, 1);
+  const wasHit = myBoard.receiveAttack(1, 1);
+
+  expect(wasHit).toBe(false);
+  expect(myBoard.gameboard[1][1].attacked).toBe(true);
+});
+
+it('Test receiveAttack - duplicated location', () => {
   const myShip = Ship.createShip(3);
   let myBoard = Gameboard.createGameboard();
   myBoard.placeShip(myShip, 'horizontal', 1, 1);
@@ -77,4 +88,38 @@ it('Test duplicated location receiveAttack', () => {
   } catch (e) {
     expect(e.message).toBe('cannot attack same location twice');
   }
+});
+
+it('Test allShipsAreSunk True - 2 ships', () => {
+  const myShip1 = Ship.createShip(3);
+  const myShip2 = Ship.createShip(3);
+  const myBoard = Gameboard.createGameboard();
+
+  myBoard.placeShip(myShip1, 'horizontal', 1, 1);
+  myBoard.placeShip(myShip2, 'horizontal', 2, 1);
+  myBoard.receiveAttack(1, 1);
+  myBoard.receiveAttack(1, 2);
+  myBoard.receiveAttack(1, 3);
+  myBoard.receiveAttack(2, 1);
+  myBoard.receiveAttack(2, 2);
+  myBoard.receiveAttack(2, 3);
+
+  expect(myBoard.allShipsAreSunk()).toBe(true);
+});
+
+it('Test allShipsAreSunk False - 2 ships', () => {
+  const myShip1 = Ship.createShip(3);
+  const myShip2 = Ship.createShip(3);
+  const myBoard = Gameboard.createGameboard();
+
+  myBoard.placeShip(myShip1, 'horizontal', 1, 1);
+  myBoard.placeShip(myShip2, 'horizontal', 2, 1);
+  myBoard.receiveAttack(1, 1);
+  myBoard.receiveAttack(1, 2);
+  myBoard.receiveAttack(1, 3);
+  myBoard.receiveAttack(2, 1);
+  myBoard.receiveAttack(2, 2);
+  myBoard.receiveAttack(2, 4); // miss
+  
+  expect(myBoard.allShipsAreSunk()).toBe(false);
 });

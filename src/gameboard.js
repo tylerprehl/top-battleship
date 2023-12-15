@@ -6,6 +6,8 @@ function createGameboard() {
       gameboard[i][j] = { ship: '-', attacked: false };
     }
   }
+
+  let ships = [];
   
   function placeShip(ship, orientation, startRowIndex, startColIndex) {
     const shipLength = ship.length;
@@ -19,6 +21,7 @@ function createGameboard() {
         }
         gameboard[startRowIndex][i] = { ship: ship, attacked: false };
       }
+      ships.push(ship);
     }
     else if (orientation === 'vertical') {
       for (let i=startRowIndex; i<startRowIndex+shipLength; i++) {
@@ -30,18 +33,40 @@ function createGameboard() {
         }
         gameboard[i][startColIndex] = { ship: ship, attacked: false };
       }
+      ships.push(ship);
     }
   }
 
   function receiveAttack(rowIndex, colIndex) {
+    // return true if the attack strikes a ship
+    // return false if the attack is a miss
     if (gameboard[rowIndex][colIndex].attacked === true){
       throw new Error('cannot attack same location twice');
     }
     gameboard[rowIndex][colIndex].attacked = true;
-    gameboard[rowIndex][colIndex].ship.hit();
+    if (gameboard[rowIndex][colIndex].ship !== '-') {
+      gameboard[rowIndex][colIndex].ship.hit();
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  function allShipsAreSunk() {
+    for (let i = 0; i < ships.length; i++ ) {
+      const ship = ships[i];
+      if (ship.isSunk() === false) {
+        return false;
+      }
+    }
+    return true;
   }
   
-  return { gameboard, placeShip, receiveAttack };
+  // access to gameboard is only really necessary for testing purposes
+  // (some tests check specific coordinates, which requires access to the 
+  // gameboard array itself)
+  return { gameboard, placeShip, receiveAttack, allShipsAreSunk };
 }
 
 export { createGameboard };
