@@ -1,6 +1,7 @@
 import * as Player from './player.js';
 import * as Gameboard from './gameboard.js';
 import * as Ship from './ship.js';
+import './styles.css';
 
 
 console.log('Starting Game');
