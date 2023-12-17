@@ -1,25 +1,41 @@
 import * as Player from './player.js';
 import * as Gameboard from './gameboard.js';
 import * as Ship from './ship.js';
+import * as GameSetup from './game-setup.js';
 import './styles.css';
+
+/*
+Notes (to Self) for Gameplay Design/Order
+- create player1
+- build player1 board
+- 'pass the computer' screen
+- create player2/AI
+- build player2/AI board
+- game starts ('pass' screen)
+- player1 attacks
+  > can see own board unmasked and player 2's board masked
+- 'pass' screen
+- player2/AI attacks
+- 'pass' screen
+- etc...
+- player/AI win/play again/reset screen
+
+
+
+Gameplay Management:
+- Receive attack (already in gameboard)
+
+DOM Gameplay Management:
+- Attack hit
+- Attack miss
+
+*/
+
 
 
 console.log('Starting Game');
-
-console.log('Get Player 1 Name');
-const player1Name = prompt('Player 1 Name');
-const player1 = Player.createPlayer(player1Name, Gameboard.createGameboard());
-if (player1Name.length === 0) {
-  throw new Error('stop game');
-}
-
-console.log('Get Player 2 Name');
-const player2Name = prompt('Player 2 Name');
-const player2 = Player.createPlayer(player2Name, Gameboard.createGameboard());
-
-const shipLengths = [2]
-
-console.log('Starting the actual game...');
+let player1 = null;
+let player2 = null;
 
 let startingPlayer = player1; // used for swapping starting player between games
 let secondPlayer = player2;
@@ -27,10 +43,29 @@ let secondPlayer = player2;
 let currentPlayer = startingPlayer; // used for game setup
 let enemyPlayer = secondPlayer;
 
+const shipLengths = [2,2,3,3,4]
 let playAgain = false;
 
-do {
+// ***************************************
+// ************* GAME SETUP **************
+// ***************************************
+listenForPlayerName();
 
+
+
+
+
+throw new Error('stop game');
+
+console.log('Starting the actual game...');
+// ***************************************
+// ************** GAME LOOP **************
+// ***************************************
+
+do {
+// ***************************************
+// ********** STILL GAME SETUP ***********
+// ***************************************
   // placing ships by player will be a full function/class
   console.log('Get Player 1 Ship Locations');
   alert('Get Player 1 Ship Locations');
@@ -116,6 +151,10 @@ do {
 
   alert('And the gameplay begins!');
 
+
+// ***************************************
+// ******** GAMEPLAY LOOP BEGINS *********
+// ***************************************
   while (player1.playerBoard.allShipsAreSunk() === false && 
   player2.playerBoard.allShipsAreSunk() === false) {
   
@@ -193,5 +232,69 @@ do {
 } while (playAgain)
   
 console.log('Finished playing');
+
+
+
+
+
+
+
+
+// ***********************************************
+// ************* LISTENER FUNCTIONS **************
+// ***********************************************
+// Because listeners don't return data to where they were called,
+// but we want them to be able to access over-arching game data 
+// (like the Players), they 'need' to be a part of battleship.js
+//
+// 'need' is quoted because I'm sure it's possible, just not with
+// what I currently know
+
+function listenForPlayerName() {
+  const playerNameForms = document.querySelectorAll('.name-entry-form');
+  playerNameForms.forEach((playerNameForm) => {
+    playerNameForm.addEventListener('submit', createPlayer);
+  });
+}
+
+function createPlayer(event) {
+  event.preventDefault();
+  const playerNum = event.srcElement[0].name.split('_')[1];
+  const playerName = event.srcElement[0].value;
+  console.log(`Player ${playerNum}: ${playerName}`);
+
+  if (playerName.length === 0) {
+    throw new Error('Name must be at least 1 character long');
+  }
+
+  if (playerNum === '1') {
+    player1 = Player.createPlayer(
+      playerName,
+      Gameboard.createGameboard(),
+      GameSetup.createBaseHtmlGameboard(8),
+      null
+    );
+  }
+  else {
+    player2 = Player.createPlayer(
+      playerName,
+      Gameboard.createGameboard(),
+      GameSetup.createBaseHtmlGameboard(8),
+      null
+    );
+  }
+
+  // if both players are assigned, start the gameSetup
+  if (player1 !== null && player2 !== null) {
+    console.log('Ready to start the game!');
+    gameSetup();
+  }
+}
+
+function gameSetup() {
+  
+
+
+}
 
 

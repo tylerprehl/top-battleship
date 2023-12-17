@@ -1,4 +1,9 @@
-function createPlayer(playerName, playerBoard) { 
+function createPlayer(
+  playerName,
+  playerBoard,
+  playerBoardPersonalViewHtml,
+  playerBoardMaskedHtml
+) {
   let winCount = 0;
 
   function getWinCount() {
@@ -9,7 +14,14 @@ function createPlayer(playerName, playerBoard) {
     winCount++;
   }
 
-  return { playerName, playerBoard, getWinCount, increaseWinCount };
+  return {
+    playerName,
+    playerBoard,
+    playerBoardPersonalViewHtml,
+    playerBoardMaskedHtml,
+    getWinCount,
+    increaseWinCount,
+  };
 }
 
 export { createPlayer };
