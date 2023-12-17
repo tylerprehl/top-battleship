@@ -8,20 +8,18 @@
   </head>
   <body>
     <header>BATTLESHIP</header>
-    <br>
     <div class="name-entry-container">
       <form class="name-entry-form" action="#" method="post">
         <label for="player_1_name">Player 1 Name</label>
-        <input type="text" id="player_1_name" name="player_1_name">
+        <input type="text" id="player_1_name" name="player_1_name" required>
         <button type="submit">Submit</button>
       </form>
       <form class="name-entry-form" action="#" method="post">
         <label for="player_2_name">Player 2 Name</label>
-        <input type="text" id="player_2_name" name="player_2_name">
+        <input type="text" id="player_2_name" name="player_2_name" required>
         <button type="submit">Submit</button>
       </form>
     </div>
-    <br>
     <div class="all-game-boards-container">
       <div class="game-board-container">
         <div class="game-board-label">My Board</div>
@@ -333,5 +331,6 @@
         </div>
       </div>
     </div>
+    <button class="full-reset-button" style="display: none;">Full Reset</button>
   </body>
 </html>

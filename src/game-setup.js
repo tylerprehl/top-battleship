@@ -71,4 +71,20 @@ function createBaseHtmlGameboard(numRows) {
   return baseGameboardContainer;
 }
 
-export { createBaseHtmlGameboard };
+function hidePlayerNameForms() {
+  const playerNameFormContainer = document.querySelector('.name-entry-container');
+  playerNameFormContainer.style.display = none;
+}
+
+function displayPlayerNameForms() {
+  const playerNameFormContainer = document.querySelector('.name-entry-container');
+  playerNameFormContainer.style.display = 'flex';
+}
+
+
+
+export { 
+  createBaseHtmlGameboard,
+  hidePlayerNameForms,
+  displayPlayerNameForms,
+};

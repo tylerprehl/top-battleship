@@ -6,10 +6,10 @@ import './styles.css';
 
 /*
 Notes (to Self) for Gameplay Design/Order
-- create player1
-- build player1 board
+- assign player1/player2 names
 - 'pass the computer' screen
-- create player2/AI
+- build player1 board
+- 'pass' screen
 - build player2/AI board
 - game starts ('pass' screen)
 - player1 attacks
@@ -20,6 +20,25 @@ Notes (to Self) for Gameplay Design/Order
 - etc...
 - player/AI win/play again/reset screen
 
+
+
+What are the next IMMEDIATE game setup activities?
+- display "Player 1 turn" empty screen
+  > remove all current elements except title
+    * boards
+    * reset buttons
+  > clicking anywhere continues to Player 1 board creation
+
+- on Player 1 board creation screen
+  > player's empty board
+  > submit button
+  > full reset button
+  > (eventually) reset board button
+
+- on Player 1 board submission
+  > display "Player 2 turn" empty screen
+    * remove all current elements except title
+    * clicking anywhere continues to Player 2 board creation
 
 
 Gameplay Management:
@@ -263,10 +282,6 @@ function createPlayer(event) {
   const playerName = event.srcElement[0].value;
   console.log(`Player ${playerNum}: ${playerName}`);
 
-  if (playerName.length === 0) {
-    throw new Error('Name must be at least 1 character long');
-  }
-
   if (playerNum === '1') {
     player1 = Player.createPlayer(
       playerName,
@@ -287,14 +302,38 @@ function createPlayer(event) {
   // if both players are assigned, start the gameSetup
   if (player1 !== null && player2 !== null) {
     console.log('Ready to start the game!');
-    gameSetup();
+    GameSetup.hidePlayerNameForms();
+    displayFullResetButton();
+    // next steps for game start!
   }
 }
 
-function gameSetup() {
-  
 
 
+function displayFullResetButton() {
+  const fullResetButton = document.querySelector('.full-reset-button');
+  fullResetButton.style.display = 'flex';
+  fullResetButton.addEventListener('onclick', onFullReset);
 }
 
+function hideFullResetButton() {
+  const fullResetButton = document.querySelector('.full-reset-button');
+  fullResetButton.style.display = 'none';
+}
 
+function onFullReset() {
+  GameSetup.displayPlayerNameForms();
+
+  player1 = null;
+  player2 = null;
+
+  startingPlayer = null;
+  secondPlayer = null;
+
+  currentPlayer = null;
+  enemyPlayer = null;
+
+  playAgain = false;
+
+  // remove whatever boards are currently showing
+}

@@ -8,24 +8,22 @@
   <script defer src="ship.bundle.js"></script><script defer src="player.bundle.js"></script><script defer src="gameboard.bundle.js"></script><script defer src="game_setup.bundle.js"></script><script defer src="battleship.bundle.js"></script></head>
   <body>
     <header>BATTLESHIP</header>
-    <br>
     <div class="name-entry-container">
       <form class="name-entry-form" action="#" method="post">
         <label for="player_1_name">Player 1 Name</label>
-        <input type="text" id="player_1_name" name="player_1_name">
+        <input type="text" id="player_1_name" name="player_1_name" required>
         <button type="submit">Submit</button>
       </form>
       <form class="name-entry-form" action="#" method="post">
         <label for="player_2_name">Player 2 Name</label>
-        <input type="text" id="player_2_name" name="player_2_name">
+        <input type="text" id="player_2_name" name="player_2_name" required>
         <button type="submit">Submit</button>
       </form>
     </div>
-    <br>
     <div class="all-game-boards-container">
-      <div class="game-board-container" hidden>
+      <div class="game-board-container">
         <div class="game-board-label">My Board</div>
-        <div class="game-board-grid" hidden>
+        <div class="game-board-grid">
           <div class="game-board-row-header"></div>
           <div class="game-board-col-header">A</div>
           <div class="game-board-col-header">B</div>
@@ -110,7 +108,7 @@
           <div class="game-board-block" id="7-7"></div>
         </div>
       </div>
-      <div class="game-board-container" hidden="true">
+      <div class="game-board-container">
         <div class="game-board-label">Enemy Board</div>
         <div class="game-board-grid">
           <div class="game-board-row-header"></div>
@@ -213,7 +211,7 @@
           <div class="game-board-block"></div>
         </div>
       </div>
-      <div class="game-board-container" hidden="true">
+      <div class="game-board-container">
         <div class="game-board-label">Practice Board</div>
         <div class="game-board-grid">
           <div class="game-board-row-header"></div>
@@ -333,5 +331,6 @@
         </div>
       </div>
     </div>
+    <button class="full-reset-button" style="display: none;">Full Reset</button>
   </body>
 </html>

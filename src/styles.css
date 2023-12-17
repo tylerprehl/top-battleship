@@ -2,6 +2,8 @@ body {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 header {
@@ -123,3 +125,8 @@ form {
   display: inline-block;
 }
 
+.full-reset-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
