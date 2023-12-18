@@ -1,7 +1,7 @@
 import * as Player from './player.js';
 import * as Gameboard from './gameboard.js';
 import * as Ship from './ship.js';
-import * as GameSetup from './game-setup.js';
+import * as GameManagement from './game-management.js';
 import './styles.css';
 
 /*
@@ -41,6 +41,7 @@ What are the next IMMEDIATE game setup activities?
     * clicking anywhere continues to Player 2 board creation
 
 
+
 Gameplay Management:
 - Receive attack (already in gameboard)
 
@@ -53,16 +54,20 @@ DOM Gameplay Management:
 
 
 console.log('Starting Game');
+
 let player1 = null;
 let player2 = null;
 
-let startingPlayer = player1; // used for swapping starting player between games
-let secondPlayer = player2;
+let startingPlayer = null; // used for swapping starting player between games
+let secondPlayer = null;
 
-let currentPlayer = startingPlayer; // used for game setup
-let enemyPlayer = secondPlayer;
+let currentPlayer = null; // used for game setup
+let enemyPlayer = null;
 
+let shipsPlacedCount = 0; 
 const shipLengths = [2,2,3,3,4]
+const totalShipsCount = shipLengths.length;
+
 let playAgain = false;
 
 // ***************************************
@@ -88,28 +93,9 @@ do {
   // placing ships by player will be a full function/class
   console.log('Get Player 1 Ship Locations');
   alert('Get Player 1 Ship Locations');
-  let shipsPlacedCount = 0; 
   while(shipsPlacedCount < shipLengths.length) {
     try {
       alert(`This ship will be ${shipLengths[shipsPlacedCount]} in length`);
-  
-      const shipInfoStr = prompt(
-        'Enter ship info\n' +
-        'Ex: h,0,1 will be horizontal, starting at row 0, col 1'
-      )
-      const shipInfoArr = shipInfoStr.split(',');
-  
-      // getShipOrientation will be a radio button selection eventually
-      let orientation = shipInfoArr[0];
-      if (orientation === 'v') {
-        orientation = 'vertical';
-      }
-      else if (orientation === 'h') {
-        orientation = 'horizontal';
-      }
-      else {
-        throw new Error('invalid orientation');
-      }
   
       // getShipStartCoordinates will be some type of table-click selection
       // because only table clicks will queue placeShip, sending a starting coordinate 
@@ -286,7 +272,7 @@ function createPlayer(event) {
     player1 = Player.createPlayer(
       playerName,
       Gameboard.createGameboard(),
-      GameSetup.createBaseHtmlGameboard(8),
+      GameManagement.createBaseHtmlGameboard(8, playerName),
       null
     );
   }
@@ -294,35 +280,138 @@ function createPlayer(event) {
     player2 = Player.createPlayer(
       playerName,
       Gameboard.createGameboard(),
-      GameSetup.createBaseHtmlGameboard(8),
+      GameManagement.createBaseHtmlGameboard(8, playerName),
       null
     );
   }
 
-  // if both players are assigned, start the gameSetup
+  // if both players are assigned, start the game setup
   if (player1 !== null && player2 !== null) {
-    console.log('Ready to start the game!');
-    GameSetup.hidePlayerNameForms();
-    displayFullResetButton();
-    // next steps for game start!
+    startingPlayer = player1; // used for swapping starting player between games
+    secondPlayer = player2;
+
+    currentPlayer = player1; // used for game setup
+    enemyPlayer = player2;
+
+    setUpGame();
   }
 }
+
+function setUpGame() {
+  GameManagement.hidePlayerNameForms();
+  GameManagement.hideOrientationRadio();
+  GameManagement.removeAllBoardsFromScreen();
+  removeFullResetButton();
+
+  GameManagement.displayMessage(player1.playerName, 'Click to place your ships');
+
+  const body = document.querySelector('body');
+  body.addEventListener('click', onClickToPlaceShips);
+}
+
+function onClickToPlaceShips(event) {
+  const body = document.querySelector('body');
+  body.removeEventListener('click', onClickToPlaceShips);
+  GameManagement.removeMessage();
+
+  GameManagement.displayOrientationRadio();
+  GameManagement.displayPlayerBoardPersonalView(currentPlayer);
+  displayFullResetButton();
+  
+  const gameBoardBlocks = document.querySelectorAll('.game-board-block');
+  gameBoardBlocks.forEach((block) => {
+    block.addEventListener('click', onShipCoordinateChoice);
+  })
+}
+
+function onShipCoordinateChoice(event) {
+  const coordinate = event.srcElement.id.split('-');
+  const rowIndex = coordinate[1];
+  const colIndex = coordinate[2];
+
+  const horizontalIsSelected = document.querySelector('#horizontal').checked;
+  let orientation = '';
+  if (horizontalIsSelected) {
+    orientation = 'horizontal';
+  }
+  else {
+    orientation = 'vertical';
+  }
+
+  let newShip = Ship.createShip(shipLengths[shipsPlacedCount]);
+
+  currentPlayer.playerBoard.placeShip(
+    newShip,
+    orientation,
+    Number(rowIndex),
+    Number(colIndex)
+  )
+
+  currentPlayer.playerBoardPersonalView = GameManagement.placeShipInHtml(
+    currentPlayer.playerBoardPersonalView,
+    newShip,
+    orientation,
+    Number(rowIndex),
+    Number(colIndex)
+  )
+
+  shipsPlacedCount++;
+  if (shipsPlacedCount === totalShipsCount) {
+    console.log('Recognized that ' + shipsPlacedCount.toString() + ' ships have been placed');
+    // save copy of HTML to mask
+    // mask the masked copy
+    // hide the orientation option
+    // remove the board
+    // remove the reset button
+    // display 'finished placing ships' message
+
+    if (player1.playerBoardMaskedView !== null && player2.playerBoardMaskedView !== null) {
+      // then the game is set up and we are ready to play
+    }
+
+    shipsPlacedCount = 0;
+    switchCurrentPlayer();
+  }
+
+  // place ship in board and HTML
+  // on ships.length count (5) ship placement
+  //   - save copy of HTML to masked (mask!)
+  //   - remove all event listeners
+  //   - display "finished placing ships" message
+  //     > click anywhere to continue
+  //     > if both players have masked HTML boards, the click anywhere should 
+  //       run onShipPlacementCompletion
+  //     > else, it should change currentPlayer and 
+}
+
+function onShipPlacementCompletion(event) {
+  // 
+}
+
 
 
 
 function displayFullResetButton() {
-  const fullResetButton = document.querySelector('.full-reset-button');
-  fullResetButton.style.display = 'flex';
-  fullResetButton.addEventListener('onclick', onFullReset);
+  const fullResetButton = document.createElement('button');
+  fullResetButton.classList.add('full-reset-button');
+  fullResetButton.textContent = 'Full Reset';
+  fullResetButton.addEventListener('click', onFullReset);
+
+  const body = document.querySelector('body');
+  body.appendChild(fullResetButton);
 }
 
-function hideFullResetButton() {
-  const fullResetButton = document.querySelector('.full-reset-button');
-  fullResetButton.style.display = 'none';
+function removeFullResetButton() {
+  try {
+    const fullResetButton = document.querySelector('.full-reset-button');
+    fullResetButton.remove();
+  } catch (e) {
+    return;
+  }
 }
 
 function onFullReset() {
-  GameSetup.displayPlayerNameForms();
+  GameManagement.displayPlayerNameForms();
 
   player1 = null;
   player2 = null;
@@ -337,3 +426,10 @@ function onFullReset() {
 
   // remove whatever boards are currently showing
 }
+
+function switchCurrentPlayer() {
+  const tempPlayer = currentPlayer;
+  currentPlayer = enemyPlayer;
+  enemyPlayer = tempPlayer;
+}
+

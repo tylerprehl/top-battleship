@@ -1,8 +1,8 @@
 function createPlayer(
   playerName,
   playerBoard,
-  playerBoardPersonalViewHtml,
-  playerBoardMaskedHtml
+  playerBoardPersonalView,
+  playerBoardMasked,
 ) {
   let winCount = 0;
 
@@ -17,8 +17,8 @@ function createPlayer(
   return {
     playerName,
     playerBoard,
-    playerBoardPersonalViewHtml,
-    playerBoardMaskedHtml,
+    playerBoardPersonalView,
+    playerBoardMasked,
     getWinCount,
     increaseWinCount,
   };

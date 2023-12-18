@@ -9,7 +9,7 @@ module.exports = {
     ship: './src/ship.js',
     player: './src/player.js',
     gameboard: './src/gameboard.js',
-    game_setup: './src/game-setup.js',
+    game_setup: './src/game-management.js',
     battleship: './src/battleship.js',
   },
   plugins: [

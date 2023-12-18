@@ -16,7 +16,7 @@
   \***********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   createPlayer: () => (/* binding */ createPlayer)\n/* harmony export */ });\nfunction createPlayer(\n  playerName,\n  playerBoard,\n  playerBoardPersonalViewHtml,\n  playerBoardMaskedHtml\n) {\n  let winCount = 0;\n\n  function getWinCount() {\n    return winCount;\n  }\n\n  function increaseWinCount() {\n    winCount++;\n  }\n\n  return {\n    playerName,\n    playerBoard,\n    playerBoardPersonalViewHtml,\n    playerBoardMaskedHtml,\n    getWinCount,\n    increaseWinCount,\n  };\n}\n\n\n\n\n//# sourceURL=webpack://top-battleship/./src/player.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   createPlayer: () => (/* binding */ createPlayer)\n/* harmony export */ });\nfunction createPlayer(\n  playerName,\n  playerBoard,\n  playerBoardPersonalView,\n  playerBoardMasked,\n) {\n  let winCount = 0;\n\n  function getWinCount() {\n    return winCount;\n  }\n\n  function increaseWinCount() {\n    winCount++;\n  }\n\n  return {\n    playerName,\n    playerBoard,\n    playerBoardPersonalView,\n    playerBoardMasked,\n    getWinCount,\n    increaseWinCount,\n  };\n}\n\n\n\n\n//# sourceURL=webpack://top-battleship/./src/player.js?");
 
 /***/ })
 

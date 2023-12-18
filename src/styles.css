@@ -125,6 +125,22 @@ form {
   display: inline-block;
 }
 
+.message-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.message-head {
+  font-size: 52px;
+  text-align: center;
+}
+
+.message-body {
+  text-align: center;
+}
+
 .full-reset-button {
   display: flex;
   justify-content: center;
