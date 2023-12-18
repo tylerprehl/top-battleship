@@ -5,10 +5,10 @@ This project's goals are tailored towards practicing Test Driven Development wit
 - run ```npm run start```
 
 ### To Do
-- Interactive UI setup (placing ships - start simple with starting coordinate/radio button orienation entry)
-  - classes: GameSetup (imports DomGameSetup)
+- Transition from player 1 ship setup to player 2 ship setup
+- Placing ships logic isn't quite complete
+  - it recognizes when 5 ships have been placed, but doesn't stop accordingly
 - Interactive UI for attacking (click on the enemy's board, remember to hide unknown!)
-  - classes: Gameplay (imports DomGameplay)
 - Reset the game completely
 
 ### Main Takeaways
@@ -22,9 +22,8 @@ This project's goals are tailored towards practicing Test Driven Development wit
 - create player1
 - build player1 board
 - 'pass computer' screen
-- create player2/AI
 - build player2/AI board
-- game starts
+- 'pass computer' screen & start game
 - player1 attacks
 - 'pass' screen
 - player2/AI attacks
