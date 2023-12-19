@@ -414,18 +414,11 @@ function onPlayerTurn() {
 }
 
 function onAttackChoice(event) {
-
+  // make the attack on the enemy board
+  // display the attack
+  // check for game win
+  // start player turn
 }
-
-  // place ship in board and HTML
-  // on ships.length count (5) ship placement
-  //   - save copy of HTML to masked (mask!)
-  //   - remove all event listeners
-  //   - display "finished placing ships" message
-  //     > click anywhere to continue
-  //     > if both players have masked HTML boards, the click anywhere should 
-  //       run onShipPlacementCompletion
-  //     > else, it should change currentPlayer and 
 
 function onShipPlacementCompletion(event) {
   // 
