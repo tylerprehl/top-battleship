@@ -6,7 +6,8 @@ This project's goals are tailored towards practicing Test Driven Development wit
 - run ```npm run start```
 
 ### To Do
-- Interactive UI for attacking (click on the enemy's board - remember to hide unknown!)
+- Display a ship when it is completely sunk
+- Take turns attacking and check win condition (all ships are sunk)
 - Reset the game completely
 
 ### Main Takeaways
