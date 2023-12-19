@@ -68,6 +68,7 @@ function createGameboard() {
     if (gameboard[rowIndex][colIndex].attacked === true){
       throw new Error('cannot attack same location twice');
     }
+
     gameboard[rowIndex][colIndex].attacked = true;
     if (gameboard[rowIndex][colIndex].ship !== '-') {
       gameboard[rowIndex][colIndex].ship.hit();

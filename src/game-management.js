@@ -205,6 +205,27 @@ function maskPlayerBoard(playerBoard) {
   });
 }
 
+function displayHit(playerBoard, gameBoardBlockId) {
+  // add  hit to the masked game board block div (class and text content)
+  const gameBoardBlockDisplayDiv = playerBoard.querySelector(`#${gameBoardBlockId}>div`);
+  gameBoardBlockDisplayDiv.classList.add('hit');
+  gameBoardBlockDisplayDiv.textContent = '&#x1f525;';
+}
+
+function displayMiss(playerBoard, gameBoardBlockId) {
+  // add miss to the masked game board block div (class)
+  const gameBoardBlockDisplayDiv = playerBoard.querySelector(`#${gameBoardBlockId}>div`);
+  gameBoardBlockDisplayDiv.classList.add('miss');
+}
+
+function unMaskGameBoardBlocks(playerBoard, gameBoardBlockIds) {
+  gameBoardBlockIds.forEach((gameBoardBlockId) => {
+    // remove mask for each game board block given
+    const gameBoardBlockDisplayDiv = playerBoard.querySelector(`#${gameBoardBlockId}>div`);
+    gameBoardBlockDisplayDiv.classList.remove('masked');
+  });
+}
+
 
 
 export { 
@@ -220,4 +241,7 @@ export {
   displayMessage,
   placeShipInHtml,
   maskPlayerBoard,
+  displayHit,
+  displayMiss,
+  unMaskGameBoardBlocks,
 };

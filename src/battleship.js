@@ -357,14 +357,13 @@ function onShipCoordinateChoice(event) {
 
   shipsPlacedCount++;
   if (shipsPlacedCount === totalShipsCount) {
-    console.log('Recognized that ' + shipsPlacedCount.toString() + ' ships have been placed');
+    console.log(`${currentPlayer.playerName} finished placing ships`);
     
     // save copy of HTML to mask
     currentPlayer.playerBoardMaskedView = currentPlayer.playerBoardPersonalView.cloneNode(true);
 
     // mask the masked copy
     GameManagement.maskPlayerBoard(currentPlayer.playerBoardMaskedView);
-    console.log(currentPlayer.playerBoardMaskedView);
 
     // display 'finished placing ships' message
     // add 1 more event listener to the game...or just move on to empty screen on last entry
@@ -385,6 +384,7 @@ function onShipCoordinateChoice(event) {
 
 function startPlayerTurn() {
   switchCurrentPlayer();
+  console.log(`It's ${currentPlayer.playerName}'s turn`);
 
   GameManagement.hideOrientationRadio();
   GameManagement.removeAllBoardsFromScreen();
@@ -392,7 +392,7 @@ function startPlayerTurn() {
 
   GameManagement.displayMessage(
     currentPlayer.playerName,
-    `It's your turn to attack\nPress any key to continue`
+    `It's your turn to attack. Press any key to continue`
   );
   const body = document.querySelector('body');
   body.addEventListener('keydown', onPlayerTurn);
@@ -414,14 +414,55 @@ function onPlayerTurn() {
 }
 
 function onAttackChoice(event) {
+  const gameBoardBlockId = event.srcElement.id;
+  console.log(gameBoardBlockId);
+
+  const coordinate = gameBoardBlockId.split('-');
+  const rowIndex = coordinate[1];
+  const colIndex = coordinate[2];
+
   // make the attack on the enemy board
-  // display the attack
-  // check for game win
-  // start player turn
+  const wasSuccessfulAttack = enemyPlayer.receiveAttack(rowIndex, colIndex);
+
+  if (wasSuccessfulAttack) {
+    // display a hit
+    /*
+    if the ship is sunk {
+      get all ship coordinates (game block id's) from player.playerBoard
+      remove mask on all of the ship's coordinates
+      if all ships are sunk (game is over) {
+        run endOfGame
+      }
+      else {
+        wait for player to end their turn
+      }
+    }
+    else {
+      wait for player to end their turn
+    }
+    */
+  }
+  else {
+    // display miss
+    // remove mask
+    // wait for player to end their turn
+  }
+
 }
 
-function onShipPlacementCompletion(event) {
-  // 
+function waitForPlayerToEndTurn() {
+  // display a message to click to continue to next player's turn
+  // set up a keypress to continue the game
+}
+
+function onPlayerEndsTurn() {
+  // remove the keypress listener
+  startPlayerTurn();
+}
+
+function endOfGame() {
+  // declare winner
+  // show both player boards (personal views)
 }
 
 
