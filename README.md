@@ -1,12 +1,12 @@
 # The Odin Project - Battleship
 This project's goals are tailored towards practicing Test Driven Development with JS and Jest. To run this project:
 - clone the repo
+- navigate your CLI to the repo folder
 - run ```npm init```
 - run ```npm run start```
 
 ### To Do
-- Fix onPlayerTurn sequence so that player name entry and orientation choice don't exist and that only one Full Reset button exists
-- Interactive UI for attacking (click on the enemy's board, remember to hide unknown!)
+- Interactive UI for attacking (click on the enemy's board - remember to hide unknown!)
 - Reset the game completely
 
 ### Main Takeaways
