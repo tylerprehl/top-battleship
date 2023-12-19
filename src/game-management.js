@@ -82,23 +82,22 @@ function displayPlayerNameForms() {
 }
 
 function removeAllBoardsFromScreen() {
-  const allBoardsContainer = document.querySelector('.all-game-boards-container');
-  const allBoardsContainerChildren = allBoardsContainer.childNodes;
-  allBoardsContainerChildren.forEach((child) => {
-    allBoardsContainer.remove(child);
+  const allBoardContainers = document.querySelectorAll('.game-board-container');
+  allBoardContainers.forEach((gameBoardContainer) => {
+    gameBoardContainer.remove();
   });
 }
 
 function displayPlayerBoardPersonalView(player) {
   const board = player.playerBoardPersonalView;
-  const body = document.querySelector('body');
-  body.appendChild(board);
+  const allBoardsContainer = document.querySelector('.all-game-boards-container');
+  allBoardsContainer.appendChild(board);
 }
 
 function displayPlayerBoardMasked(player) {
-  const board = player.displayPlayerBoardMasked;
-  const body = document.querySelector('body');
-  body.appendChild(board);
+  const board = player.playerBoardMaskedView;
+  const allBoardsContainer = document.querySelector('.all-game-boards-container');
+  allBoardsContainer.appendChild(board);
 }
 
 function hideOrientationRadio() {

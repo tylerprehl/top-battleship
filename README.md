@@ -5,9 +5,7 @@ This project's goals are tailored towards practicing Test Driven Development wit
 - run ```npm run start```
 
 ### To Do
-- Transition from player 1 ship setup to player 2 ship setup
-- Placing ships logic isn't quite complete
-  - it recognizes when 5 ships have been placed, but doesn't stop accordingly
+- Fix onPlayerTurn sequence so that player name entry and orientation choice don't exist and that only one Full Reset button exists
 - Interactive UI for attacking (click on the enemy's board, remember to hide unknown!)
 - Reset the game completely
 

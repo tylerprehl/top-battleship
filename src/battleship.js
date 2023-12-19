@@ -303,10 +303,10 @@ function setUpGame() {
   GameManagement.removeAllBoardsFromScreen();
   removeFullResetButton();
 
-  GameManagement.displayMessage(player1.playerName, 'Click to place your ships');
+  GameManagement.displayMessage(currentPlayer.playerName, 'Press any key to place your ships');
 
   const body = document.querySelector('body');
-  body.addEventListener('click', onClickToPlaceShips);
+  body.addEventListener('keydown', onClickToPlaceShips);
 }
 
 function onClickToPlaceShips(event) {
@@ -366,18 +366,56 @@ function onShipCoordinateChoice(event) {
     GameManagement.maskPlayerBoard(currentPlayer.playerBoardMaskedView);
     console.log(currentPlayer.playerBoardMaskedView);
 
-    // hide the orientation option
-    // remove the board
-    // remove the reset button
     // display 'finished placing ships' message
+    // add 1 more event listener to the game...or just move on to empty screen on last entry
 
     if (player1.playerBoardMaskedView !== null && player2.playerBoardMaskedView !== null) {
       // then the game is set up and we are ready to play
+      startPlayerTurn();
     }
-
-    shipsPlacedCount = 0;
-    switchCurrentPlayer();
+    else {
+      // we need to get the second player set up
+      // send it back to setup
+      shipsPlacedCount = 0;
+      switchCurrentPlayer();
+      setUpGame();
+    }
   }
+}
+
+function startPlayerTurn() {
+  switchCurrentPlayer();
+
+  GameManagement.hideOrientationRadio();
+  GameManagement.removeAllBoardsFromScreen();
+  removeFullResetButton();
+
+  GameManagement.displayMessage(
+    currentPlayer.playerName,
+    `It's your turn to attack\nPress any key to continue`
+  );
+  const body = document.querySelector('body');
+  body.addEventListener('keydown', onPlayerTurn);
+}
+
+function onPlayerTurn() {
+  const body = document.querySelector('body');
+  body.removeEventListener('click', onPlayerTurn);
+
+  GameManagement.removeMessage();
+  GameManagement.displayPlayerBoardPersonalView(currentPlayer);
+  GameManagement.displayPlayerBoardMasked(enemyPlayer);
+  displayFullResetButton();
+    
+  const gameBoardBlocks = document.querySelectorAll('.game-board-block');
+  gameBoardBlocks.forEach((block) => {
+    block.addEventListener('click', onAttackChoice);
+  })
+}
+
+function onAttackChoice(event) {
+
+}
 
   // place ship in board and HTML
   // on ships.length count (5) ship placement
@@ -388,7 +426,6 @@ function onShipCoordinateChoice(event) {
   //     > if both players have masked HTML boards, the click anywhere should 
   //       run onShipPlacementCompletion
   //     > else, it should change currentPlayer and 
-}
 
 function onShipPlacementCompletion(event) {
   // 
