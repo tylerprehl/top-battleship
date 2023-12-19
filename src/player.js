@@ -2,7 +2,7 @@ function createPlayer(
   playerName,
   playerBoard,
   playerBoardPersonalView,
-  playerBoardMasked,
+  playerBoardMaskedView,
 ) {
   let winCount = 0;
 
@@ -18,7 +18,7 @@ function createPlayer(
     playerName,
     playerBoard,
     playerBoardPersonalView,
-    playerBoardMasked,
+    playerBoardMaskedView,
     getWinCount,
     increaseWinCount,
   };

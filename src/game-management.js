@@ -150,6 +150,8 @@ function placeShipInHtml(playerBoardHtml, newShip, orientation, rowIndex, colInd
       `#c-${curRowIndex.toString()}-${curColIndex.toString()}`
     );
 
+    // does this need to be playerBoardHtml for this to not write to the screen immediately?
+    // do the changes occur live because it was placed on screen?
     const shipPieceDiv = document.createElement('div');
 
     let pieceType = '';
@@ -195,6 +197,14 @@ function placeShipInHtml(playerBoardHtml, newShip, orientation, rowIndex, colInd
   return playerBoardHtml;
 }
 
+function maskPlayerBoard(playerBoard) {
+  const maskDiv = document.createElement('div');
+  maskDiv.classList.add('masked');
+  const gameBoardBlocks = playerBoard.querySelectorAll('.game-board-block');
+  gameBoardBlocks.forEach((gameBoardBlock) => {
+    gameBoardBlock.appendChild(maskDiv.cloneNode());
+  });
+}
 
 
 
@@ -210,4 +220,5 @@ export {
   removeMessage,
   displayMessage,
   placeShipInHtml,
+  maskPlayerBoard,
 };

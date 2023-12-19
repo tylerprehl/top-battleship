@@ -358,8 +358,14 @@ function onShipCoordinateChoice(event) {
   shipsPlacedCount++;
   if (shipsPlacedCount === totalShipsCount) {
     console.log('Recognized that ' + shipsPlacedCount.toString() + ' ships have been placed');
+    
     // save copy of HTML to mask
+    currentPlayer.playerBoardMaskedView = currentPlayer.playerBoardPersonalView.cloneNode(true);
+
     // mask the masked copy
+    GameManagement.maskPlayerBoard(currentPlayer.playerBoardMaskedView);
+    console.log(currentPlayer.playerBoardMaskedView);
+
     // hide the orientation option
     // remove the board
     // remove the reset button
