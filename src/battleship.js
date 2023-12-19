@@ -311,7 +311,7 @@ function setUpGame() {
 
 function onClickToPlaceShips(event) {
   const body = document.querySelector('body');
-  body.removeEventListener('click', onClickToPlaceShips);
+  body.removeEventListener('keydown', onClickToPlaceShips);
   GameManagement.removeMessage();
 
   GameManagement.displayOrientationRadio();
@@ -400,7 +400,7 @@ function startPlayerTurn() {
 
 function onPlayerTurn() {
   const body = document.querySelector('body');
-  body.removeEventListener('click', onPlayerTurn);
+  body.removeEventListener('keydown', onPlayerTurn);
 
   GameManagement.removeMessage();
   GameManagement.displayPlayerBoardPersonalView(currentPlayer);
