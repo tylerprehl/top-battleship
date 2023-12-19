@@ -47,14 +47,31 @@
           <div class="game-board-col-header">H</div>
 
           <div class="game-board-row-header">1</div>
-          <div class="game-board-block" id="0-0"></div>
-          <div class="game-board-block" id="0-1"></div>
-          <div class="game-board-block" id="0-2"></div>
-          <div class="game-board-block" id="0-3"></div>
-          <div class="game-board-block" id="0-4"></div>
-          <div class="game-board-block" id="0-5"></div>
-          <div class="game-board-block" id="0-6"></div>
-          <div class="game-board-block" id="0-7"></div>
+          <div class="game-board-block" id="c-0-0">
+            <div class="block-display"></div>
+          </div>
+          <div class="game-board-block" id="c-0-1">
+            <div class="block-display"></div>
+          </div>
+          <div class="game-board-block" id="c-0-2">
+            <div class="block-display masked hit">&#x1f525;</div>
+            <div class="ship-end point-west"></div>
+          </div>
+          <div class="game-board-block" id="c-0-3">
+            <div class="block-display miss"></div>
+          </div>
+          <div class="game-board-block" id="c-0-4">
+            <div class="block-display"></div>
+          </div>
+          <div class="game-board-block" id="c-0-5">
+            <div class="block-display"></div>
+          </div>
+          <div class="game-board-block" id="c-0-6">
+            <div class="block-display"></div>
+          </div>
+          <div class="game-board-block" id="c-0-7">
+            <div class="block-display"></div>
+          </div>
           <div class="game-board-row-header">2</div>
           <div class="game-board-block" id="1-0"></div>
           <div class="game-board-block" id="1-1"></div>
@@ -120,111 +137,9 @@
           <div class="game-board-block" id="7-7"></div>
         </div>
       </div>
+      
       <div class="game-board-container">
         <div class="game-board-label">Enemy Board</div>
-        <div class="game-board-grid">
-          <div class="game-board-row-header"></div>
-          <div class="game-board-col-header">A</div>
-          <div class="game-board-col-header">B</div>
-          <div class="game-board-col-header">C</div>
-          <div class="game-board-col-header">D</div>
-          <div class="game-board-col-header">E</div>
-          <div class="game-board-col-header">F</div>
-          <div class="game-board-col-header">G</div>
-          <div class="game-board-col-header">H</div>
-          <div class="game-board-row-header">1</div>
-          <div class="game-board-block">
-            <div class="ship-end point-north"></div>
-          </div>
-          <div class="game-board-block">
-            <div class="ship-end point-west"></div>
-            <div class="hit">&#x1f525;</div>
-          </div>
-          <div class="game-board-block">
-            <div class="ship-body"></div>
-            <div class="hit">&#x1f525;</div>
-          </div>
-          <div class="game-board-block">
-            <div class="ship-end point-east"></div>
-            <div class="hit">&#x1f525;</div>
-          </div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-row-header">2</div>
-          <div class="game-board-block">
-            <div class="ship-body"></div>
-          </div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-row-header">3</div>
-          <div class="game-board-block">
-            <div class="ship-body"></div>
-          </div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-row-header">4</div>
-          <div class="game-board-block">
-            <div class="ship-end point-south"></div>
-          </div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-row-header">5</div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-row-header">6</div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-row-header">7</div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-row-header">8</div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-          <div class="game-board-block"></div>
-        </div>
-      </div>
-      <div class="game-board-container">
-        <div class="game-board-label">Practice Board</div>
         <div class="game-board-grid">
           <div class="game-board-row-header"></div>
           <div class="game-board-col-header">A</div>
@@ -241,8 +156,8 @@
             <div class="masked"></div>
           </div>
           <div class="game-board-block" id="0,1">
-            <div class="ship-end point-west"></div>
             <div class="masked"></div>
+            <div class="ship-end point-west"></div>
           </div>
           <div class="game-board-block">
             <div class="ship-body"></div>

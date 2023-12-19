@@ -1,26 +1,7 @@
-/*
-Game Setup:
-- Get Player name
-  > require SOME name (form validation)
-- Get Ship starting coordinate
-- Get Ship orientation
-- Restart Game (restart with same players)
-- Reset from Scratch (restart with new players)
-
-DOM Game Setup:
-- Get Player name
-  > require SOME name (form validation)
-- Create Gameboard
-  > unmasked for game setup while player places ships
-- Mask Gameboard
-  > creates a second copy of the gameboard, but masked
-  > both copies should be updated on any change
-- Place Ship
-*/
 function createBaseHtmlGameboard(numRows, playerName) {
   // creates the base HTML gameboard to be saved as a variable
   // size is based on numRows provided (will ALWAYS be a square board)
-  // variable size does NOT currently work due to CSS specifications!!
+  // variable size does NOT currently work due to CSS specifications! - must be 8
 
   const baseGameboardContainer = document.createElement('div');
   baseGameboardContainer.classList.add('game-board-container');
@@ -36,8 +17,13 @@ function createBaseHtmlGameboard(numRows, playerName) {
   const colHeaderDiv = document.createElement('div');
   colHeaderDiv.classList.add('game-board-col-header');
 
+  // gameBoardBlockDivs have an interior div for 
   const gameBoardBlockDiv = document.createElement('div');
   gameBoardBlockDiv.classList.add('game-board-block');
+
+  const gameBoardBlockDisplayDiv = document.createElement('div');
+  gameBoardBlockDisplayDiv.classList.add('block-display');
+  gameBoardBlockDiv.appendChild(gameBoardBlockDisplayDiv);
 
   const baseGameboardGrid = document.createElement('div');
   baseGameboardGrid.classList.add('game-board-grid');
@@ -60,7 +46,7 @@ function createBaseHtmlGameboard(numRows, playerName) {
     baseGameboardGrid.appendChild(newRowHeaderDiv);
 
     for (let j = 0; j < numRows; j++) {
-      const newGameBoardBlockDiv = gameBoardBlockDiv.cloneNode();
+      const newGameBoardBlockDiv = gameBoardBlockDiv.cloneNode(true);
       newGameBoardBlockDiv['id'] = 'c-' + i.toString() + '-' + j.toString();
       baseGameboardGrid.appendChild(newGameBoardBlockDiv);
     }
@@ -197,31 +183,36 @@ function placeShipInHtml(playerBoardHtml, newShip, orientation, rowIndex, colInd
 }
 
 function maskPlayerBoard(playerBoard) {
-  const maskDiv = document.createElement('div');
-  maskDiv.classList.add('masked');
   const gameBoardBlocks = playerBoard.querySelectorAll('.game-board-block');
   gameBoardBlocks.forEach((gameBoardBlock) => {
-    gameBoardBlock.appendChild(maskDiv.cloneNode());
+    const gameBoardBlockDisplayDiv = gameBoardBlock.querySelector('.block-display');
+    gameBoardBlockDisplayDiv.classList.add('masked');
   });
 }
 
 function displayHit(playerBoard, gameBoardBlockId) {
   // add  hit to the masked game board block div (class and text content)
-  const gameBoardBlockDisplayDiv = playerBoard.querySelector(`#${gameBoardBlockId}>div`);
+  const gameBoardBlockDisplayDiv = playerBoard.querySelector(
+    `#${gameBoardBlockId}>div.block-display`
+  );
   gameBoardBlockDisplayDiv.classList.add('hit');
-  gameBoardBlockDisplayDiv.textContent = '&#x1f525;';
+  gameBoardBlockDisplayDiv.textContent = String.fromCodePoint(0x1f525);
 }
 
 function displayMiss(playerBoard, gameBoardBlockId) {
   // add miss to the masked game board block div (class)
-  const gameBoardBlockDisplayDiv = playerBoard.querySelector(`#${gameBoardBlockId}>div`);
+  const gameBoardBlockDisplayDiv = playerBoard.querySelector(
+    `#${gameBoardBlockId}>div.block-display`
+  );
   gameBoardBlockDisplayDiv.classList.add('miss');
 }
 
 function unMaskGameBoardBlocks(playerBoard, gameBoardBlockIds) {
   gameBoardBlockIds.forEach((gameBoardBlockId) => {
     // remove mask for each game board block given
-    const gameBoardBlockDisplayDiv = playerBoard.querySelector(`#${gameBoardBlockId}>div`);
+    const gameBoardBlockDisplayDiv = playerBoard.querySelector(
+      `#${gameBoardBlockId}>div.block-display`
+    );
     gameBoardBlockDisplayDiv.classList.remove('masked');
   });
 }

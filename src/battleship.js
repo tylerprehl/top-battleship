@@ -325,7 +325,7 @@ function onClickToPlaceShips(event) {
 }
 
 function onShipCoordinateChoice(event) {
-  const coordinate = event.srcElement.id.split('-');
+  const coordinate = event.currentTarget.id.split('-');
   const rowIndex = coordinate[1];
   const colIndex = coordinate[2];
 
@@ -414,18 +414,20 @@ function onPlayerTurn() {
 }
 
 function onAttackChoice(event) {
-  const gameBoardBlockId = event.srcElement.id;
+  const gameBoardBlockId = event.currentTarget.id;
   console.log(gameBoardBlockId);
 
   const coordinate = gameBoardBlockId.split('-');
-  const rowIndex = coordinate[1];
-  const colIndex = coordinate[2];
+  const rowIndex = Number(coordinate[1]);
+  const colIndex = Number(coordinate[2]);
 
   // make the attack on the enemy board
-  const wasSuccessfulAttack = enemyPlayer.receiveAttack(rowIndex, colIndex);
+  const wasSuccessfulAttack = enemyPlayer.playerBoard.receiveAttack(rowIndex, colIndex);
 
   if (wasSuccessfulAttack) {
-    // display a hit
+    GameManagement.displayHit(enemyPlayer.playerBoardPersonalView, gameBoardBlockId);
+    GameManagement.displayHit(enemyPlayer.playerBoardMaskedView, gameBoardBlockId);
+
     /*
     if the ship is sunk {
       get all ship coordinates (game block id's) from player.playerBoard
@@ -443,8 +445,16 @@ function onAttackChoice(event) {
     */
   }
   else {
-    // display miss
-    // remove mask
+    // display miss on both boards
+    GameManagement.displayMiss(enemyPlayer.playerBoardPersonalView, gameBoardBlockId);
+    GameManagement.displayMiss(enemyPlayer.playerBoardMaskedView, gameBoardBlockId);
+
+    // remove mask from masked view
+    GameManagement.unMaskGameBoardBlocks(
+      enemyPlayer.playerBoardMaskedView,
+      [gameBoardBlockId]
+    );
+
     // wait for player to end their turn
   }
 
