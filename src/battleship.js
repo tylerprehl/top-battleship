@@ -271,7 +271,7 @@ function createPlayer(event) {
   if (playerNum === '1') {
     player1 = Player.createPlayer(
       playerName,
-      Gameboard.createGameboard(),
+      Gameboard.createGameboard(8),
       GameManagement.createBaseHtmlGameboard(8, playerName),
       null
     );
@@ -279,7 +279,7 @@ function createPlayer(event) {
   else {
     player2 = Player.createPlayer(
       playerName,
-      Gameboard.createGameboard(),
+      Gameboard.createGameboard(8),
       GameManagement.createBaseHtmlGameboard(8, playerName),
       null
     );
@@ -430,8 +430,12 @@ function onAttackChoice(event) {
     const attackedShip = enemyPlayer.playerBoard.gameboard[rowIndex][colIndex].ship
     const shipIsSunk = attackedShip.isSunk()
     if (shipIsSunk) {
-      let attackedShipCoordinates = [];
-      
+      console.log('A ship has been sunk!');
+      const attackedShipCoordinates = enemyPlayer.playerBoard.getShipCoordinatesList(attackedShip);
+      attackedShipCoordinates.forEach((coordinate) => {
+        GameManagement.unMaskGameBoardBlock(enemyPlayer.playerBoardMaskedView, `c-${coordinate[0]}-${coordinate[1]}`);
+      });
+
       if (enemyPlayer.playerBoard.allShipsAreSunk()) {
 
       }
@@ -461,9 +465,9 @@ function onAttackChoice(event) {
     GameManagement.displayMiss(enemyPlayer.playerBoardMaskedView, gameBoardBlockId);
 
     // remove mask from masked view
-    GameManagement.unMaskGameBoardBlocks(
+    GameManagement.unMaskGameBoardBlock(
       enemyPlayer.playerBoardMaskedView,
-      [gameBoardBlockId]
+      gameBoardBlockId
     );
 
     // wait for player to end their turn

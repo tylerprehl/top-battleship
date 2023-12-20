@@ -207,14 +207,11 @@ function displayMiss(playerBoard, gameBoardBlockId) {
   gameBoardBlockDisplayDiv.classList.add('miss');
 }
 
-function unMaskGameBoardBlocks(playerBoard, gameBoardBlockIds) {
-  gameBoardBlockIds.forEach((gameBoardBlockId) => {
-    // remove mask for each game board block given
-    const gameBoardBlockDisplayDiv = playerBoard.querySelector(
-      `#${gameBoardBlockId}>div.block-display`
-    );
-    gameBoardBlockDisplayDiv.classList.remove('masked');
-  });
+function unMaskGameBoardBlock(playerBoard, gameBoardBlockId) {
+  const gameBoardBlockDisplayDiv = playerBoard.querySelector(
+    `#${gameBoardBlockId}>div.block-display`
+  );
+  gameBoardBlockDisplayDiv.classList.remove('masked');
 }
 
 
@@ -234,5 +231,5 @@ export {
   maskPlayerBoard,
   displayHit,
   displayMiss,
-  unMaskGameBoardBlocks,
+  unMaskGameBoardBlock,
 };
