@@ -19,36 +19,6 @@ Notes (to Self) for Gameplay Design/Order
 - 'pass' screen
 - etc...
 - player/AI win/play again/reset screen
-
-
-
-What are the next IMMEDIATE game setup activities?
-- display "Player 1 turn" empty screen
-  > remove all current elements except title
-    * boards
-    * reset buttons
-  > clicking anywhere continues to Player 1 board creation
-
-- on Player 1 board creation screen
-  > player's empty board
-  > submit button
-  > full reset button
-  > (eventually) reset board button
-
-- on Player 1 board submission
-  > display "Player 2 turn" empty screen
-    * remove all current elements except title
-    * clicking anywhere continues to Player 2 board creation
-
-
-
-Gameplay Management:
-- Receive attack (already in gameboard)
-
-DOM Gameplay Management:
-- Attack hit
-- Attack miss
-
 */
 
 
@@ -79,87 +49,18 @@ listenForPlayerName();
 
 
 
-throw new Error('stop game');
+throw new Error('stop do-while loop game');
 
 console.log('Starting the actual game...');
-// ***************************************
-// ************** GAME LOOP **************
-// ***************************************
+
 
 do {
 // ***************************************
-// ********** STILL GAME SETUP ***********
+// ********** OG GAMEPLAY LOOP ***********
 // ***************************************
-  // placing ships by player will be a full function/class
-  console.log('Get Player 1 Ship Locations');
-  alert('Get Player 1 Ship Locations');
-  while(shipsPlacedCount < shipLengths.length) {
-    try {
-      alert(`This ship will be ${shipLengths[shipsPlacedCount]} in length`);
-  
-      // getShipStartCoordinates will be some type of table-click selection
-      // because only table clicks will queue placeShip, sending a starting coordinate 
-      // that is out of bounds is impossilbe
-      // (would be cool if there's a faded version of ship until placed)
-      player1.playerBoard.placeShip(
-        Ship.createShip(shipLengths[shipsPlacedCount]),
-        orientation,
-        Number(shipInfoArr[1]),
-        Number(shipInfoArr[2])
-      )
-      shipsPlacedCount++;
-    } catch (e) {
-      alert(`Error: ${e.message}\nPlease try again`);
-    }
-  }
-  
-  console.log('Get Player 2 Ship Locations');
-  alert('Get Player 2 Ship Locations');
-  shipsPlacedCount = 0; 
-  while(shipsPlacedCount < shipLengths.length) {
-    try {
-      alert(`This ship will be ${shipLengths[shipsPlacedCount]} in length`);
-  
-      const shipInfoStr = prompt(
-        'Enter ship info\n' +
-        'Ex: h,0,1 will be horizontal, starting at row 0, col 1'
-      )
-      const shipInfoArr = shipInfoStr.split(',');
-  
-      // getShipOrientation will be a radio button selection eventually
-      let orientation = shipInfoArr[0];
-      if (orientation === 'v') {
-        orientation = 'vertical';
-      }
-      else if (orientation === 'h') {
-        orientation = 'horizontal';
-      }
-      else {
-        throw new Error('invalid orientation');
-      }
-  
-      // getShipStartCoordinates will be some type of table-click selection
-      // because only table clicks will queue placeShip, sending a starting coordinate 
-      // that is out of bounds is impossilbe
-      // (would be cool if there's a faded version of ship until placed)
-      player2.playerBoard.placeShip(
-        Ship.createShip(shipLengths[shipsPlacedCount]),
-        orientation,
-        Number(shipInfoArr[1]),
-        Number(shipInfoArr[2])
-      )
-      shipsPlacedCount++;
-    } catch (e) {
-      alert(`Error: ${e.message}\nPlease try again`);
-    }
-  }
+// only partially complete, as I've been removing segments as I
+// implement them through the UI
 
-  alert('And the gameplay begins!');
-
-
-// ***************************************
-// ******** GAMEPLAY LOOP BEGINS *********
-// ***************************************
   while (player1.playerBoard.allShipsAreSunk() === false && 
   player2.playerBoard.allShipsAreSunk() === false) {
   
@@ -242,18 +143,17 @@ console.log('Finished playing');
 
 
 
-
-
-
 // ***********************************************
 // ************* LISTENER FUNCTIONS **************
 // ***********************************************
-// Because listeners don't return data to where they were called,
-// but we want them to be able to access over-arching game data 
-// (like the Players), they 'need' to be a part of battleship.js
-//
-// 'need' is quoted because I'm sure it's possible, just not with
-// what I currently know
+/*
+Because listeners don't return data to where they were called,
+but we want them to be able to access over-arching game data 
+(like the Players), they 'need' to be a part of battleship.js
+
+'need' is quoted because I'm sure it's possible, just not with
+what I currently know
+*/
 
 function listenForPlayerName() {
   const playerNameForms = document.querySelectorAll('.name-entry-form');
@@ -429,6 +329,7 @@ function onAttackChoice(event) {
 
     const attackedShip = enemyPlayer.playerBoard.gameboard[rowIndex][colIndex].ship
     const shipIsSunk = attackedShip.isSunk()
+
     if (shipIsSunk) {
       console.log('A ship has been sunk!');
       const attackedShipCoordinates = enemyPlayer.playerBoard.getShipCoordinatesList(attackedShip);
@@ -437,27 +338,12 @@ function onAttackChoice(event) {
       });
 
       if (enemyPlayer.playerBoard.allShipsAreSunk()) {
-
+        endOfGame();
       }
     }
     else {
       waitForPlayerToEndTurn();
     }
-    /*
-    if the ship is sunk {
-      get all of the ship's coordinates (game block id's) from player.playerBoard
-      remove mask on all of the ship's coordinates
-      if all ships are sunk (game is over) {
-        run endOfGame
-      }
-      else {
-        wait for player to end their turn
-      }
-    }
-    else {
-      wait for player to end their turn
-    }
-    */
   }
   else {
     // display miss on both boards
@@ -486,12 +372,21 @@ function onPlayerEndsTurn() {
 }
 
 function endOfGame() {
-  // declare winner
-  // show both player boards (personal views)
+  console.log(`The game has ended! ${currentPlayer.playerName} is the winner!`);
 }
 
 
 
+
+// ***********************************************
+// ************** HELPER FUNCTIONS ***************
+// ***********************************************
+/*
+I decided that these functions, while *ideally* placed elsewhere,
+are required to be in battleship.js because they either need to 
+be able to manage over-arching game data (such as onFullReset
+and it's companion functions)
+*/
 
 function displayFullResetButton() {
   const fullResetButton = document.createElement('button');
