@@ -83,7 +83,15 @@ function createGameboard(size) {
   }
 
   function getShipCoordinatesList(ship) {
-
+    let shipCoordinatesList = [];
+    for (let i = 0; i < size; i++) {
+      for (let j = 0; j < size; j++) {
+        if (gameboard[i][j].ship === ship) {
+          shipCoordinatesList.push([i,j]);
+        }
+      }
+    }
+    return shipCoordinatesList;
   }
 
   function allShipsAreSunk() {

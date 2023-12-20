@@ -95,9 +95,9 @@ it('Test getListOfShipCoordinates', () => {
   let myBoard = Gameboard.createGameboard(8);
   myBoard.placeShip(myShip, 'horizontal', 1, 1);
   const shipCoordinates = myBoard.getShipCoordinatesList(myShip);
-  expect(shipCoordinates[0]).toBe([1,1]);
-  expect(shipCoordinates[1]).toBe([1,2]);
-  expect(shipCoordinates[1]).toBe([1,3]);
+  expect(shipCoordinates[0]).toEqual([1,1]);
+  expect(shipCoordinates[1]).toEqual([1,2]);
+  expect(shipCoordinates[2]).toEqual([1,3]);
 });
 
 it('Test allShipsAreSunk True - 2 ships', () => {
