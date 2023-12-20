@@ -17,4 +17,4 @@ This project's goals are tailored towards practicing Test Driven Development wit
 
 ### Other Interesting Things Learned
 - the Array.prototype.forEach() loop cannot be broken with a return statement
-- if you want to change some node's textContent to have an emoji, entering the usual &#x...; doesn't work. Instead, I used String.fromCodePoint(...)
+- if you want to change some node's textContent to have an emoji, passing the usual &#x...; doesn't work. Instead, I used String.fromCodePoint(...)
