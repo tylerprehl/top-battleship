@@ -405,15 +405,6 @@ function displayFullResetButton() {
   body.appendChild(fullResetButton);
 }
 
-function removeFullResetButton() {
-  try {
-    const fullResetButton = document.querySelector('.full-reset-button');
-    fullResetButton.remove();
-  } catch (e) {
-    return;
-  }
-}
-
 function onFullReset() {
   GameManagement.displayPlayerNameForms();
 
@@ -429,6 +420,15 @@ function onFullReset() {
   playAgain = false;
 
   // remove whatever boards are currently showing
+}
+
+function removeFullResetButton() {
+  try {
+    const fullResetButton = document.querySelector('.full-reset-button');
+    fullResetButton.remove();
+  } catch (e) {
+    return;
+  }
 }
 
 function switchCurrentPlayer() {
