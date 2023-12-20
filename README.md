@@ -6,26 +6,15 @@ This project's goals are tailored towards practicing Test Driven Development wit
 - run ```npm run start```
 
 ### To Do
-- Display a ship when it is completely sunk
-- Take turns attacking and check win condition (all ships are sunk)
-- Reset the game completely
+- display the winner message/win counts
+- restart the game (but keep the same players, rotating who goes first)
+- reset the game completely
 
 ### Main Takeaways
 - TDD is SUPER helpful for building pure functions (and preventing tightly coupled code)
 - TDD is also a great way to make designing objects and deciding where certain functions should reside simple
+- TDD *feels* burdensome when it comes to DOM-manipulation function testing, but now that I have to play an entire game to get to the endOfGame() function, I can see exactly how necessary it is if only for time savings
 
 ### Other Interesting Things Learned
 - the Array.prototype.forEach() loop cannot be broken with a return statement
-
-### Notes (to Self) for Gameplay Design/Order
-- create player1
-- build player1 board
-- 'pass computer' screen
-- build player2/AI board
-- 'pass computer' screen & start game
-- player1 attacks
-- 'pass' screen
-- player2/AI attacks
-- 'pass' screen
-- etc...
-- player/AI win/play again/reset screen
+- if you want to change some node's textContent to have an emoji, entering the usual &#x...; doesn't work. Instead, I used String.fromCodePoint(...)
