@@ -259,22 +259,17 @@ function onShipCoordinateChoice(event) {
   if (shipsPlacedCount === totalShipsCount) {
     console.log(`${currentPlayer.playerName} finished placing ships`);
     
-    // save copy of HTML to mask
+    // save copy of HTML to MaskedView and mask it
     currentPlayer.playerBoardMaskedView = currentPlayer.playerBoardPersonalView.cloneNode(true);
-
-    // mask the masked copy
     GameManagement.maskPlayerBoard(currentPlayer.playerBoardMaskedView);
 
     // display 'finished placing ships' message
     // add 1 more event listener to the game...or just move on to empty screen on last entry
 
     if (player1.playerBoardMaskedView !== null && player2.playerBoardMaskedView !== null) {
-      // then the game is set up and we are ready to play
       startPlayerTurn();
     }
     else {
-      // we need to get the second player set up
-      // send it back to setup
       shipsPlacedCount = 0;
       switchCurrentPlayer();
       setUpGame();
@@ -340,34 +335,46 @@ function onAttackChoice(event) {
       if (enemyPlayer.playerBoard.allShipsAreSunk()) {
         endOfGame();
       }
+      else {
+        waitForPlayerToEndTurn(wasSuccessfulAttack);
+      }
     }
     else {
-      waitForPlayerToEndTurn();
+      waitForPlayerToEndTurn(wasSuccessfulAttack);
     }
   }
   else {
-    // display miss on both boards
     GameManagement.displayMiss(enemyPlayer.playerBoardPersonalView, gameBoardBlockId);
     GameManagement.displayMiss(enemyPlayer.playerBoardMaskedView, gameBoardBlockId);
 
-    // remove mask from masked view
+    // remove mask of empty space from MaskedView
     GameManagement.unMaskGameBoardBlock(
       enemyPlayer.playerBoardMaskedView,
       gameBoardBlockId
     );
 
-    // wait for player to end their turn
+    waitForPlayerToEndTurn(wasSuccessfulAttack);
   }
-
 }
 
-function waitForPlayerToEndTurn() {
-  // display a message to click to continue to next player's turn
-  // set up a keypress to continue the game
+function waitForPlayerToEndTurn(wasSuccessfulAttack) {
+  if (wasSuccessfulAttack) {
+    GameManagement.displayMessage('', 'Nice hit! Now press any key to let the other player go');
+  }
+  else {
+    GameManagement.displayMessage('', 'Tough miss :/ Now press any key to let the other player go');
+  }
+  
+  const body = document.querySelector('body');
+  body.addEventListener('keydown', onPlayerEndsTurn);
 }
 
 function onPlayerEndsTurn() {
-  // remove the keypress listener
+  GameManagement.removeMessage();
+  
+  const body = document.querySelector('body');
+  body.removeEventListener('keydown', onPlayerEndsTurn);
+
   startPlayerTurn();
 }
 
