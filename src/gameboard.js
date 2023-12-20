@@ -1,8 +1,11 @@
-function createGameboard() {
+function createGameboard(size) {
+// note - although the createGameboard is configured to be able to handle a variable
+// size board, the CSS does not currently allow for it!
+
   let gameboard = [];
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < size; i++) {
     gameboard[i] = [];
-    for (let j = 0; j < 8; j++) {
+    for (let j = 0; j < size; j++) {
       gameboard[i][j] = { ship: '-', attacked: false };
     }
   }
@@ -11,9 +14,9 @@ function createGameboard() {
 
   function resetBoard() {
     let newGameboard = [];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < size; i++) {
       newGameboard[i] = [];
-      for (let j = 0; j < 8; j++) {
+      for (let j = 0; j < size; j++) {
         newGameboard[i][j] = { ship: '-', attacked: false };
       }
     }
@@ -27,7 +30,7 @@ function createGameboard() {
     if (orientation === 'horizontal') {
       // first check for errors
       for (let i=startColIndex; i<startColIndex+shipLength; i++) {
-        if (i > 7) {
+        if (i > size-1) {
           throw new Error('ship out of bounds');
         }
         if (gameboard[startRowIndex][i].ship !== '-') {
@@ -45,7 +48,7 @@ function createGameboard() {
     else if (orientation === 'vertical') {
       // first check for errors
       for (let i=startRowIndex; i<startRowIndex+shipLength; i++) {
-        if (i > 7) {
+        if (i > size-1) {
           throw new Error('ship out of bounds');
         }
         if (gameboard[i][startColIndex].ship !== '-') {
@@ -79,6 +82,10 @@ function createGameboard() {
     }
   }
 
+  function getShipCoordinatesList(ship) {
+
+  }
+
   function allShipsAreSunk() {
     for (let i = 0; i < ships.length; i++ ) {
       const ship = ships[i];
@@ -89,10 +96,7 @@ function createGameboard() {
     return true;
   }
   
-  // access to gameboard is only really necessary for testing purposes
-  // (some tests check specific coordinates, which requires access to the 
-  // gameboard array itself)
-  return { gameboard, resetBoard, placeShip, receiveAttack, allShipsAreSunk };
+  return { gameboard, resetBoard, placeShip, receiveAttack, getShipCoordinatesList, allShipsAreSunk };
 }
 
 export { createGameboard };

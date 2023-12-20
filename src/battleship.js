@@ -421,16 +421,27 @@ function onAttackChoice(event) {
   const rowIndex = Number(coordinate[1]);
   const colIndex = Number(coordinate[2]);
 
-  // make the attack on the enemy board
   const wasSuccessfulAttack = enemyPlayer.playerBoard.receiveAttack(rowIndex, colIndex);
 
   if (wasSuccessfulAttack) {
     GameManagement.displayHit(enemyPlayer.playerBoardPersonalView, gameBoardBlockId);
     GameManagement.displayHit(enemyPlayer.playerBoardMaskedView, gameBoardBlockId);
 
+    const attackedShip = enemyPlayer.playerBoard.gameboard[rowIndex][colIndex].ship
+    const shipIsSunk = attackedShip.isSunk()
+    if (shipIsSunk) {
+      let attackedShipCoordinates = [];
+      
+      if (enemyPlayer.playerBoard.allShipsAreSunk()) {
+
+      }
+    }
+    else {
+      waitForPlayerToEndTurn();
+    }
     /*
     if the ship is sunk {
-      get all ship coordinates (game block id's) from player.playerBoard
+      get all of the ship's coordinates (game block id's) from player.playerBoard
       remove mask on all of the ship's coordinates
       if all ships are sunk (game is over) {
         run endOfGame

@@ -3,7 +3,7 @@ import * as Ship from './ship';
 
 it('Test createGameboard & horizontal placeShip', () => {
   const myShip = Ship.createShip(3);
-  let myBoard = Gameboard.createGameboard();
+  let myBoard = Gameboard.createGameboard(8);
   myBoard.placeShip(myShip, 'horizontal', 1, 1);
 
   expect(myBoard.gameboard[1][1].ship).toBe(myShip);
@@ -13,7 +13,7 @@ it('Test createGameboard & horizontal placeShip', () => {
 
 it('Test createGameboard & vertical placeShip', () => {
   const myShip = Ship.createShip(3);
-  let myBoard = Gameboard.createGameboard();
+  let myBoard = Gameboard.createGameboard(8);
   myBoard.placeShip(myShip, 'vertical', 1, 1);
 
   expect(myBoard.gameboard[1][1].ship).toBe(myShip);
@@ -24,7 +24,7 @@ it('Test createGameboard & vertical placeShip', () => {
 it('Test two ships', () => {
   const myShip1 = Ship.createShip(2);
   const myShip2 = Ship.createShip(3);
-  let myBoard = Gameboard.createGameboard();
+  let myBoard = Gameboard.createGameboard(8);
   myBoard.placeShip(myShip1, 'horizontal', 1, 1);
   myBoard.placeShip(myShip2, 'vertical', 2, 1);
 
@@ -36,7 +36,7 @@ it('Test two ships', () => {
 it('Test overlap placeShip', () => {
   const myShip1 = Ship.createShip(3);
   const myShip2 = Ship.createShip(4);
-  let myBoard = Gameboard.createGameboard();
+  let myBoard = Gameboard.createGameboard(8);
   myBoard.placeShip(myShip1, 'horizontal', 1, 0);
   try {
     myBoard.placeShip(myShip2, 'vertical', 0, 1);
@@ -47,7 +47,7 @@ it('Test overlap placeShip', () => {
 
 it('Test out of bound placeShip', () => {
   const myShip = Ship.createShip(3);
-  let myBoard = Gameboard.createGameboard();
+  let myBoard = Gameboard.createGameboard(8);
   try {
     myBoard.placeShip(myShip, 'horizontal', 1, 6);
   } catch (e) {
@@ -57,7 +57,7 @@ it('Test out of bound placeShip', () => {
 
 it('Test receiveAttack - hit', () => {
   const myShip = Ship.createShip(2);
-  let myBoard = Gameboard.createGameboard();
+  let myBoard = Gameboard.createGameboard(8);
   myBoard.placeShip(myShip, 'horizontal', 1, 1);
   const wasHit = myBoard.receiveAttack(1, 1);
 
@@ -69,7 +69,7 @@ it('Test receiveAttack - hit', () => {
 
 it('Test receiveAttack - miss', () => {
   const myShip = Ship.createShip(2);
-  let myBoard = Gameboard.createGameboard();
+  let myBoard = Gameboard.createGameboard(8);
   myBoard.placeShip(myShip, 'horizontal', 2, 1);
   const wasHit = myBoard.receiveAttack(1, 1);
 
@@ -79,7 +79,7 @@ it('Test receiveAttack - miss', () => {
 
 it('Test receiveAttack - duplicated location', () => {
   const myShip = Ship.createShip(3);
-  let myBoard = Gameboard.createGameboard();
+  let myBoard = Gameboard.createGameboard(8);
   myBoard.placeShip(myShip, 'horizontal', 1, 1);
   myBoard.receiveAttack(1, 1);
   try {
@@ -90,10 +90,20 @@ it('Test receiveAttack - duplicated location', () => {
   }
 });
 
+it('Test getListOfShipCoordinates', () => {
+  const myShip = Ship.createShip(3);
+  let myBoard = Gameboard.createGameboard(8);
+  myBoard.placeShip(myShip, 'horizontal', 1, 1);
+  const shipCoordinates = myBoard.getShipCoordinatesList(myShip);
+  expect(shipCoordinates[0]).toBe([1,1]);
+  expect(shipCoordinates[1]).toBe([1,2]);
+  expect(shipCoordinates[1]).toBe([1,3]);
+});
+
 it('Test allShipsAreSunk True - 2 ships', () => {
   const myShip1 = Ship.createShip(3);
   const myShip2 = Ship.createShip(3);
-  const myBoard = Gameboard.createGameboard();
+  const myBoard = Gameboard.createGameboard(8);
 
   myBoard.placeShip(myShip1, 'horizontal', 1, 1);
   myBoard.placeShip(myShip2, 'horizontal', 2, 1);
@@ -110,7 +120,7 @@ it('Test allShipsAreSunk True - 2 ships', () => {
 it('Test allShipsAreSunk False - 2 ships', () => {
   const myShip1 = Ship.createShip(3);
   const myShip2 = Ship.createShip(3);
-  const myBoard = Gameboard.createGameboard();
+  const myBoard = Gameboard.createGameboard(8);
 
   myBoard.placeShip(myShip1, 'horizontal', 1, 1);
   myBoard.placeShip(myShip2, 'horizontal', 2, 1);
