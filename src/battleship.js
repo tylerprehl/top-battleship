@@ -38,7 +38,7 @@ let currentPlayer = null; // used for game setup
 let enemyPlayer = null;
 
 let shipsPlacedCount = 0; 
-const shipLengths = [2]
+const shipLengths = [2,2,3,3,4]
 const totalShipsCount = shipLengths.length;
 
 let playAgain = false;
