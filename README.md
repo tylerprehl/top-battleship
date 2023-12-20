@@ -8,6 +8,7 @@ This project's goal is to practice Test Driven Development with JS and Jest (whi
 
 ### Project Status
 - battleship gameplay is complete
+- error handling needs to be improved (why does duplicate attack choice result in 5 error messages?) 
 - missing LOTS of UI tests! (I'm looking at you game-management.js)
 - stylistically can be improved with animations/sounds/cooler board & ship design
 
