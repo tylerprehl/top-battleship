@@ -35,7 +35,7 @@ let currentPlayer = null; // used for game setup
 let enemyPlayer = null;
 
 let shipsPlacedCount = 0; 
-const shipLengths = [2,2,3,3,4]
+const shipLengths = [2]
 const totalShipsCount = shipLengths.length;
 
 let playAgain = false;
@@ -165,6 +165,7 @@ function listenForPlayerName() {
 function createPlayer(event) {
   // UPDATE FOR FUTURE
   // make it clear that the name was submitted
+  // name character limit
   event.preventDefault();
   const playerNum = event.srcElement[0].name.split('_')[1];
   const playerName = event.srcElement[0].value;
@@ -382,8 +383,12 @@ function onPlayerEndsTurn() {
 
 function endOfGame() {
   console.log(`The game has ended! ${currentPlayer.playerName} is the winner!`);
-  // display winner below header as big message
-  // display win counts beneath
+  GameManagement.displayEndgameContent(
+    player1.playerName,
+    player1.getWinCount(),
+    player2.playerName,
+    player2.getWinCount()
+  );
   // display play again button beneath win counts (still above boards)
   // event listener that queues onPlayAgain on 'click'
 }
@@ -402,7 +407,7 @@ and it's companion functions)
 */
 
 function onPlayAgain() {
-
+  GameManagement.hideEndgameContent();
 }
 
 function displayFullResetButton() {
@@ -416,10 +421,11 @@ function displayFullResetButton() {
 }
 
 function onFullReset() {
-  GameManagement.hideOrientationRadio(); // test to ensure radio goes away
-  GameManagement.removeAllBoardsFromScreen(); // test to ensure all boards removed
-  GameManagement.removeMessage(); // test to ensure any message is removed
-  removeFullResetButton(); // test to ensure reset button is removed
+  GameManagement.hideOrientationRadio();
+  GameManagement.removeAllBoardsFromScreen();
+  GameManagement.removeMessage();
+  GameManagement.hideEndgameContent();
+  removeFullResetButton();
 
   GameManagement.displayPlayerNameForms();
 

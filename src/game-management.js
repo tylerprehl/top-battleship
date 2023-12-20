@@ -207,8 +207,27 @@ function unMaskGameBoardBlock(playerBoard, gameBoardBlockId) {
   gameBoardBlockDisplayDiv.classList.remove('masked');
 }
 
-function displayWinner(playerName) {
+function hideEndgameContent() {
+  const endgameContainer = document.querySelector('.endgame-container');
+  endgameContainer.style.display = 'none';
+}
 
+function displayEndgameContent(player1Name, player1Wins, player2Name, player2Wins) {
+  const endgameContainer = document.querySelector('.endgame-container');
+  
+  const player1NameDiv = endgameContainer.querySelector('.player-name#player_1');
+  player1NameDiv.textContent = player1Name;
+
+  const player2NameDiv = endgameContainer.querySelector('.player-name#player_2');
+  player2NameDiv.textContent = player2Name;
+
+  const player1ScoreDiv = endgameContainer.querySelector('.player-wins#player_1');
+  player1ScoreDiv.textContent = player1Wins;
+
+  const player2ScoreDiv = endgameContainer.querySelector('.player-wins#player_2');
+  player2ScoreDiv.textContent = player2Wins;
+
+  endgameContainer.style.display = 'flex';
 }
 
 
@@ -228,4 +247,6 @@ export {
   displayHit,
   displayMiss,
   unMaskGameBoardBlock,
+  hideEndgameContent,
+  displayEndgameContent,
 };

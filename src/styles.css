@@ -15,7 +15,7 @@ header {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  column-gap: 50px;
+  column-gap: 40px;
   row-gap: 20px;
 }
 
@@ -145,4 +145,49 @@ form {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.endgame-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.winner {
+  text-align: center;
+  inline-size: 95vw;
+  hyphens: auto;
+  overflow-wrap: break-word;
+  font-size: 36px;
+}
+
+.win-counts-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+  font-size: 20px;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+  padding: 10px
+}
+
+.win-count-head {
+  font-size: 26px;
+}
+
+.win-count-body {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 20px;
+  row-gap: 10px;
+}
+
+.player-win-count-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 210px;
 }
