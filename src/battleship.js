@@ -217,7 +217,7 @@ function onClickToPlaceShips(event) {
   GameManagement.removeMessage();
 
   GameManagement.displayOrientationRadio();
-  GameManagement.displayPlayerBoardPersonalView(currentPlayer);
+  GameManagement.displayPlayerBoard(currentPlayer.playerBoardPersonalView);
   displayFullResetButton();
   
   const gameBoardBlocks = document.querySelectorAll('.game-board-block');
@@ -300,8 +300,8 @@ function onPlayerTurn() {
   body.removeEventListener('keydown', onPlayerTurn);
 
   GameManagement.removeMessage();
-  GameManagement.displayPlayerBoardPersonalView(currentPlayer);
-  GameManagement.displayPlayerBoardMasked(enemyPlayer);
+  GameManagement.displayPlayerBoard(currentPlayer.playerBoardPersonalView);
+  GameManagement.displayPlayerBoard(enemyPlayer.playerBoardMaskedView);
   displayFullResetButton();
     
   const gameBoardBlocks = document.querySelectorAll('.game-board-block');
@@ -382,6 +382,10 @@ function onPlayerEndsTurn() {
 
 function endOfGame() {
   console.log(`The game has ended! ${currentPlayer.playerName} is the winner!`);
+  // display winner below header as big message
+  // display win counts beneath
+  // display play again button beneath win counts (still above boards)
+  // event listener that queues onPlayAgain on 'click'
 }
 
 
@@ -397,7 +401,7 @@ be able to manage over-arching game data (such as onFullReset
 and it's companion functions)
 */
 
-function startNewGame() {
+function onPlayAgain() {
 
 }
 

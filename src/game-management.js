@@ -74,16 +74,9 @@ function removeAllBoardsFromScreen() {
   });
 }
 
-function displayPlayerBoardPersonalView(player) {
-  const board = player.playerBoardPersonalView;
+function displayPlayerBoard(playerBoardHtml) {
   const allBoardsContainer = document.querySelector('.all-game-boards-container');
-  allBoardsContainer.appendChild(board);
-}
-
-function displayPlayerBoardMasked(player) {
-  const board = player.playerBoardMaskedView;
-  const allBoardsContainer = document.querySelector('.all-game-boards-container');
-  allBoardsContainer.appendChild(board);
+  allBoardsContainer.appendChild(playerBoardHtml);
 }
 
 function hideOrientationRadio() {
@@ -214,6 +207,10 @@ function unMaskGameBoardBlock(playerBoard, gameBoardBlockId) {
   gameBoardBlockDisplayDiv.classList.remove('masked');
 }
 
+function displayWinner(playerName) {
+
+}
+
 
 
 export { 
@@ -221,8 +218,7 @@ export {
   hidePlayerNameForms,
   displayPlayerNameForms,
   removeAllBoardsFromScreen,
-  displayPlayerBoardPersonalView,
-  displayPlayerBoardMasked,
+  displayPlayerBoard,
   hideOrientationRadio,
   displayOrientationRadio,
   removeMessage,
