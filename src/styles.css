@@ -141,6 +141,12 @@ form {
   text-align: center;
 }
 
+.play-again-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .full-reset-button {
   display: flex;
   justify-content: center;
@@ -162,27 +168,16 @@ form {
   font-size: 36px;
 }
 
-.win-counts-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  row-gap: 10px;
-  font-size: 20px;
-  border: 1px solid #ccc;
-  border-radius: 1em;
-  padding: 10px
-}
-
-.win-count-head {
-  font-size: 26px;
-}
-
 .win-count-body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   column-gap: 20px;
   row-gap: 10px;
+  font-size: 20px;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+  padding: 10px
 }
 
 .player-win-count-container {

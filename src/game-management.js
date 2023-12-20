@@ -212,8 +212,11 @@ function hideEndgameContent() {
   endgameContainer.style.display = 'none';
 }
 
-function displayEndgameContent(player1Name, player1Wins, player2Name, player2Wins) {
+function displayEndgameContent(winnerName, player1Name, player1Wins, player2Name, player2Wins) {
   const endgameContainer = document.querySelector('.endgame-container');
+
+  const winnerNameDiv = endgameContainer.querySelector('.winner');
+  winnerNameDiv.textContent = `${winnerName} Wins!`;
   
   const player1NameDiv = endgameContainer.querySelector('.player-name#player_1');
   player1NameDiv.textContent = player1Name;

@@ -23,7 +23,10 @@ Notes (to Self) for Gameplay Design/Order
 
 
 
-console.log('Starting Game');
+
+// ***************************************
+// ************* GAME SETUP **************
+// ***************************************
 
 let player1 = null;
 let player2 = null;
@@ -40,8 +43,12 @@ const totalShipsCount = shipLengths.length;
 
 let playAgain = false;
 
+
+
+
+
 // ***************************************
-// ************* GAME SETUP **************
+// ************* START GAME **************
 // ***************************************
 listenForPlayerName();
 
@@ -49,102 +56,9 @@ listenForPlayerName();
 
 
 
-throw new Error('stop do-while loop game');
-
-console.log('Starting the actual game...');
-
-
-do {
-// ***************************************
-// ********** OG GAMEPLAY LOOP ***********
-// ***************************************
-// only partially complete, as I've been removing segments as I
-// implement them through the UI
-
-  while (player1.playerBoard.allShipsAreSunk() === false && 
-  player2.playerBoard.allShipsAreSunk() === false) {
-  
-    alert(`${currentPlayer.playerName}, it's your turn`);
-    
-    const attackCoordinatesStr = prompt(`Pick a coordinate to attack\nEx: 1,1`);
-    const attackCoordinatesArr = attackCoordinatesStr.split(',');
-    
-    try {
-      const successfulAttack = enemyPlayer.playerBoard.receiveAttack(
-        Number(attackCoordinatesArr[0]),
-        Number(attackCoordinatesArr[1])
-      );
-      
-      if (successfulAttack) {
-        alert(`Nice hit!`);
-      }
-      else {
-        alert(`Miss!`);
-      }
-    
-      // switch turns
-      const tempPlayer = currentPlayer;
-      currentPlayer = enemyPlayer;
-      enemyPlayer = tempPlayer;
-    
-    } catch (e) {
-      alert(`Error: ${e.message}\nPlease try again`);
-    }
-  }
-
-  console.log('Someone won the game!');
-
-  // this can definitely be a function
-  if (player1.playerBoard.allShipsAreSunk() === true) {
-    alert(`${player2.playerName} won the game!`);
-    player2.increaseWinCount();
-  }
-  else if (player2.playerBoard.allShipsAreSunk() === true) {
-    alert(`${player1.playerName} won the game!`);
-    player1.increaseWinCount();
-  }
-  else {
-    console.log('Actually, something went wrong cause nobody won');
-  }
-
-  // this can definitely be a function
-  const playAgainStr = prompt('Play again? (true/false)');
-  if (playAgainStr === 'true') {
-    playAgain = true;
-  }
-  else if (playAgainStr === 'false') {
-    playAgain = false;
-  }
-  else {
-    alert('You didn\'t enter true OR false, so we\'re gonna end it.');
-    playAgain = false;
-  }
-
-
-  // this can definitely be a function
-  if (playAgain) {
-    console.log('Playing again!...');
-    let tempPlayer = startingPlayer;
-    startingPlayer = secondPlayer;
-    secondPlayer = tempPlayer;
-
-    currentPlayer = startingPlayer;
-    enemyPlayer = secondPlayer;
-
-    player1.playerBoard.resetBoard();
-    player2.playerBoard.resetBoard();
-  }
-
-} while (playAgain)
-  
-console.log('Finished playing');
-
-
-
-
 
 // ***********************************************
-// ************* LISTENER FUNCTIONS **************
+// *********** LISTENER FUNCTIONS GAME ***********
 // ***********************************************
 /*
 Because listeners don't return data to where they were called,
@@ -259,9 +173,7 @@ function onShipCoordinateChoice(event) {
   )
 
   shipsPlacedCount++;
-  if (shipsPlacedCount === totalShipsCount) {
-    console.log(`${currentPlayer.playerName} finished placing ships`);
-    
+  if (shipsPlacedCount === totalShipsCount) {    
     // save copy of HTML to MaskedView and mask it
     currentPlayer.playerBoardMaskedView = currentPlayer.playerBoardPersonalView.cloneNode(true);
     GameManagement.maskPlayerBoard(currentPlayer.playerBoardMaskedView);
@@ -282,7 +194,6 @@ function onShipCoordinateChoice(event) {
 
 function startPlayerTurn() {
   switchCurrentPlayer();
-  console.log(`It's ${currentPlayer.playerName}'s turn`);
 
   GameManagement.hideOrientationRadio();
   GameManagement.removeAllBoardsFromScreen();
@@ -313,7 +224,6 @@ function onPlayerTurn() {
 
 function onAttackChoice(event) {
   const gameBoardBlockId = event.currentTarget.id;
-  console.log(gameBoardBlockId);
 
   const coordinate = gameBoardBlockId.split('-');
   const rowIndex = Number(coordinate[1]);
@@ -329,7 +239,6 @@ function onAttackChoice(event) {
     const shipIsSunk = attackedShip.isSunk()
 
     if (shipIsSunk) {
-      console.log('A ship has been sunk!');
       const attackedShipCoordinates = enemyPlayer.playerBoard.getShipCoordinatesList(attackedShip);
       attackedShipCoordinates.forEach((coordinate) => {
         GameManagement.unMaskGameBoardBlock(enemyPlayer.playerBoardMaskedView, `c-${coordinate[0]}-${coordinate[1]}`);
@@ -382,16 +291,57 @@ function onPlayerEndsTurn() {
 }
 
 function endOfGame() {
-  console.log(`The game has ended! ${currentPlayer.playerName} is the winner!`);
+  currentPlayer.increaseWinCount();
+
   GameManagement.displayEndgameContent(
+    currentPlayer.playerName,
     player1.playerName,
     player1.getWinCount(),
     player2.playerName,
     player2.getWinCount()
   );
-  // display play again button beneath win counts (still above boards)
-  // event listener that queues onPlayAgain on 'click'
+  
+  displayPlayAgainButton();
 }
+
+function displayPlayAgainButton() {
+  const playAgainButton = document.createElement('button');
+  playAgainButton.classList.add('play-again-button');
+  playAgainButton.textContent = 'Play Again?';
+  playAgainButton.addEventListener('click', onPlayAgain);
+
+  const endgameContainer = document.querySelector('.endgame-container');
+  endgameContainer.insertAdjacentElement('afterend',playAgainButton);
+}
+
+function onPlayAgain() {
+  GameManagement.hideEndgameContent();
+  removePlayAgainButton();
+
+  GameManagement.hideOrientationRadio();
+  GameManagement.removeAllBoardsFromScreen();
+  GameManagement.removeMessage();
+  GameManagement.hideEndgameContent();
+  removeFullResetButton();
+
+  GameManagement.displayPlayerNameForms();
+
+  // switch starting player
+  const tempPlayer = startingPlayer;
+  startingPlayer = secondPlayer;
+  secondPlayer = tempPlayer;
+
+  currentPlayer = startingPlayer;
+  enemyPlayer = secondPlayer;
+
+  shipsPlacedCount = 0;
+
+  resetPlayerBoards(player1);
+  resetPlayerBoards(player2);
+
+  setUpGame();
+}
+
 
 
 
@@ -406,8 +356,19 @@ be able to manage over-arching game data (such as onFullReset
 and it's companion functions)
 */
 
-function onPlayAgain() {
-  GameManagement.hideEndgameContent();
+function resetPlayerBoards(player) {
+  player.playerBoard = Gameboard.createGameboard(8);
+  player.playerBoardPersonalView = GameManagement.createBaseHtmlGameboard(8, player.playerName);
+  player.playerBoardMaskedView = null;
+}
+
+function removePlayAgainButton() {
+  try {
+    const playAgainButton = document.querySelector('.play-again-button');
+    playAgainButton.remove();
+  } catch (e) {
+    return;
+  }
 }
 
 function displayFullResetButton() {
@@ -426,6 +387,7 @@ function onFullReset() {
   GameManagement.removeMessage();
   GameManagement.hideEndgameContent();
   removeFullResetButton();
+  removePlayAgainButton();
 
   GameManagement.displayPlayerNameForms();
 
@@ -442,7 +404,7 @@ function onFullReset() {
   playAgain = false;
   shipsPlacedCount = 0;
 
-  listenForPlayerName(); // test to ensure new game goes as expected
+  listenForPlayerName();
 }
 
 function removeFullResetButton() {
