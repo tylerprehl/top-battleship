@@ -1,14 +1,15 @@
 # The Odin Project - Battleship
-This project's goals are tailored towards practicing Test Driven Development with JS and Jest. To run this project:
+This project's goal is to practice Test Driven Development with JS and Jest (which also requires the use of Babel). It also reinforces webpack and JS object knowledge. To play the game:
 - clone the repo
 - navigate your CLI to the repo folder
-- run ```npm init```
+- install ````npm``` if necessary
+- run ```npm init``` (press ```enter``` a bunch of times)
 - run ```npm run start```
 
-### To Do
-- display the winner message/win counts
-- restart the game (but keep the same players, rotating who goes first)
-- reset the game completely
+### Project Status
+- battleship gameplay is complete
+- missing LOTS of UI TDD! (I'm looking at you game-management.js)
+- stylistically can be improved with animations/sounds/cooler board & ship design
 
 ### Main Takeaways
 - TDD is SUPER helpful for building pure functions (and preventing tightly coupled code)
