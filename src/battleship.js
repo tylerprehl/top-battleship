@@ -163,6 +163,8 @@ function listenForPlayerName() {
 }
 
 function createPlayer(event) {
+  // UPDATE FOR FUTURE
+  // make it clear that the name was submitted
   event.preventDefault();
   const playerNum = event.srcElement[0].name.split('_')[1];
   const playerName = event.srcElement[0].value;
@@ -395,6 +397,10 @@ be able to manage over-arching game data (such as onFullReset
 and it's companion functions)
 */
 
+function startNewGame() {
+
+}
+
 function displayFullResetButton() {
   const fullResetButton = document.createElement('button');
   fullResetButton.classList.add('full-reset-button');
@@ -406,8 +412,14 @@ function displayFullResetButton() {
 }
 
 function onFullReset() {
+  GameManagement.hideOrientationRadio(); // test to ensure radio goes away
+  GameManagement.removeAllBoardsFromScreen(); // test to ensure all boards removed
+  GameManagement.removeMessage(); // test to ensure any message is removed
+  removeFullResetButton(); // test to ensure reset button is removed
+
   GameManagement.displayPlayerNameForms();
 
+  // reset all game data
   player1 = null;
   player2 = null;
 
@@ -418,8 +430,9 @@ function onFullReset() {
   enemyPlayer = null;
 
   playAgain = false;
+  shipsPlacedCount = 0;
 
-  // remove whatever boards are currently showing
+  listenForPlayerName(); // test to ensure new game goes as expected
 }
 
 function removeFullResetButton() {
