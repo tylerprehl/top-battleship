@@ -2,7 +2,7 @@
 This project's goal is to practice Test Driven Development with JS and Jest (which also requires the use of Babel). It also reinforces webpack and JS object knowledge. To play the game:
 - clone the repo
 - navigate your CLI to the repo folder
-- install ```npm``` if necessary
+- install ```npm``` (if not already installed)
 - run ```npm init``` (press ```enter``` a bunch of times)
 - run ```npm run start```
 
